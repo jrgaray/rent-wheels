@@ -1,32 +1,11 @@
-import { ApolloServer } from 'apollo-server'
-import db from './db'
-import typeDefs from './schema'
-import { resolvers } from './resolvers'
+// Transpile all code following this line with babel and use '@babel/preset-env' (aka ES6) preset.
+require('@babel/register')({
+    presets: ['@babel/preset-env'],
+})
+require('@babel/polyfill')
+require('dotenv').config()
 
-const setUpDatabase: () => Promise<void> = async () => {
-    try {
-        await db.sequelize.authenticate()
-        console.log('Connection has been established successfully.')
-        await db.sequelize.sync()
-    } catch (error) {
-        console.error('Unable to connect to the database:', error)
-    }
-}
+// Import the rest of our application.
+module.exports = require('./server.js')
 
-const initDatabaseAndGraphQLServer: () => Promise<void> = async () => {
-    await setUpDatabase()
-    // The ApolloServer constructor requires two parameters: your schema
-    // definition and your set of resolvers.
-    const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context: db,
-    })
-
-    // The `listen` method launches a web server.
-    server.listen().then(({ url }) => {
-        console.log(`🚀  Server ready at ${url}`)
-    })
-}
-
-initDatabaseAndGraphQLServer()
+// Source: https://timonweb.com/javascript/how-to-enable-es6-imports-in-nodejs/
