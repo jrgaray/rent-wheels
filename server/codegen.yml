@@ -1,0 +1,27 @@
+# Overwrites previous types.
+overwrite: true
+
+# Point to the schema that I want types generated.
+schema: './src/schema.ts'
+
+# Tell it where to generate, what the config is for it, and what plugins to use.
+generates:
+    # Output path for the generated file.
+    src/generated/graphql.ts:
+        config:
+            # Needs to be here for resolvers to correctly type for Apollo Server.
+            # Adds a signature index to any generated resolver.
+            # https://github.com/dotansimha/graphql-code-generator/issues/1133
+            useIndexSignature: true
+
+            # Not a good practice. Types the return types of the resolvers as any.
+            # Would look into a more strongly typed solution.
+            defaultMapper: any
+
+            # Allows typing of context within resolvers.
+            contextType: ../db#DatabaseObject
+
+        # The plugins I used to generate the code.
+        plugins:
+            - 'typescript'
+            - 'typescript-resolvers'
