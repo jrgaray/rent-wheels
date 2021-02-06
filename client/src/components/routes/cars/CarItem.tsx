@@ -2,17 +2,23 @@ import React, { FC } from 'react'
 import {
     IconButton,
     ListItem,
-    ListItemIcon,
     ListItemSecondaryAction,
     ListItemText,
-    Typography,
 } from '@material-ui/core'
 import styled from 'styled-components'
-import { MoreVert } from '@material-ui/icons'
+import { Delete } from '@material-ui/icons'
 const StyledImage = styled.img`
-    height: 10em;
-    width: 10em;
     object-fit: cover;
+    margin-right: 8px;
+    max-width: 140px;
+    @media (min-width: 576px) {
+        max-width: 300px;
+    }
+`
+
+const StyledListItem = styled(ListItem)`
+    && {
+    }
 `
 
 type CarItemProps = {
@@ -39,28 +45,33 @@ const CarItem: FC<CarItemProps> = ({
     userId,
 }) => {
     return (
-        <ListItem divider={divider}>
-            <ListItemIcon>
-                <StyledImage
-                    alt='thing'
-                    src={image}
-                    // src='https://images.dog.ceo/breeds/shihtzu/n02086240_1205.jpg'
-                />
-            </ListItemIcon>
+        <StyledListItem
+            onClick={() => console.log('listItem')}
+            button
+            divider={true}>
+            <StyledImage alt='car-image' src={image} />
             <ListItemText
+                primaryTypographyProps={{
+                    variant: 'subtitle1',
+                }}
+                secondaryTypographyProps={{
+                    variant: 'caption',
+                }}
                 secondary={
-                    <Typography>
-                        {vin}, {isActive ? 'ACTIVE' : 'INACTIVE'}
-                    </Typography>
+                    <>
+                        {`VIN: ${vin}`}
+                        <br />
+                        {`   STATUS: ${isActive ? 'ACTIVE' : 'INACTIVE'}`}
+                    </>
                 }
-                primary={`${make} ${model} ${year}`}
+                primary={`${year} ${make} ${model}`}
             />
             <ListItemSecondaryAction>
-                <IconButton edge='end'>
-                    <MoreVert />
+                <IconButton onClick={() => console.log('delete')} edge='end'>
+                    <Delete />
                 </IconButton>
             </ListItemSecondaryAction>
-        </ListItem>
+        </StyledListItem>
     )
 }
 

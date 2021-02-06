@@ -3,10 +3,18 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from 'app/App'
 import reportWebVitals from './reportWebVitals'
+import { Provider } from 'react-redux'
+import store from 'app/store'
+import { ApolloProvider } from '@apollo/client'
+import client from 'app/client'
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <ApolloProvider client={client}>
+            <Provider store={store}>
+                <App />
+            </Provider>
+        </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('root')
 )
