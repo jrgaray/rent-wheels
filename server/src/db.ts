@@ -15,13 +15,16 @@ User.init(
             allowNull: false,
         },
         username: {
+            allowNull: false,
             type: DataTypes.STRING,
         },
         password: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         email: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
     },
     {
@@ -40,18 +43,27 @@ Car.init(
         },
         make: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         model: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
         year: {
             type: DataTypes.STRING,
+            allowNull: false,
+        },
+        vin: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         isActive: {
             type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
         userID: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
     },
     {
@@ -62,7 +74,7 @@ Car.init(
     }
 )
 
-User.hasOne(Car, { foreignKey: { name: 'userID' } })
+User.hasMany(Car, { foreignKey: { name: 'userID' } })
 Car.belongsTo(User, { foreignKey: 'userID' })
 
 export interface DatabaseObject {

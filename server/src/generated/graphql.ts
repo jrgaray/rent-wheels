@@ -19,16 +19,17 @@ export type User = {
   id?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
 };
 
 export type Car = {
   __typename?: 'Car';
   id?: Maybe<Scalars['String']>;
-  isActive?: Maybe<Scalars['String']>;
+  isActive?: Maybe<Scalars['Boolean']>;
   make?: Maybe<Scalars['String']>;
   model?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['String']>;
-  userId?: Maybe<Scalars['String']>;
+  userID?: Maybe<Scalars['String']>;
   User?: Maybe<User>;
   vin?: Maybe<Scalars['String']>;
 };
@@ -51,16 +52,16 @@ export type QueryUserArgs = {
 };
 
 export type CreateCarInput = {
-  isActive: Scalars['String'];
+  isActive: Scalars['Boolean'];
   make: Scalars['String'];
   model: Scalars['String'];
   year: Scalars['String'];
   vin: Scalars['String'];
-  userId: Scalars['String'];
+  userID: Scalars['String'];
 };
 
 export type UpdateCarInput = {
-  isActive: Scalars['String'];
+  isActive: Scalars['Boolean'];
   make: Scalars['String'];
   model: Scalars['String'];
   year: Scalars['String'];
@@ -183,12 +184,12 @@ export type ResolversTypes = ResolversObject<{
   User: ResolverTypeWrapper<any>;
   String: ResolverTypeWrapper<any>;
   Car: ResolverTypeWrapper<any>;
+  Boolean: ResolverTypeWrapper<any>;
   Query: ResolverTypeWrapper<{}>;
   CreateCarInput: ResolverTypeWrapper<any>;
   UpdateCarInput: ResolverTypeWrapper<any>;
   CreateUserInput: ResolverTypeWrapper<any>;
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<any>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -196,28 +197,29 @@ export type ResolversParentTypes = ResolversObject<{
   User: any;
   String: any;
   Car: any;
+  Boolean: any;
   Query: {};
   CreateCarInput: any;
   UpdateCarInput: any;
   CreateUserInput: any;
   Mutation: {};
-  Boolean: any;
 }>;
 
 export type UserResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type CarResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Car'] = ResolversParentTypes['Car']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  isActive?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   make?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   model?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  userId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  userID?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   User?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   vin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

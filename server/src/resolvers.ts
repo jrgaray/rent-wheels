@@ -1,19 +1,22 @@
 import { Resolvers } from './generated/graphql'
+import { v4 as uuidv4 } from 'uuid'
 // Resolvers define the technique for fetching the types defined in the
 // schema. This resolver retrieves books from the "books" array above.
 
 export const resolvers: Resolvers = {
     Query: {
-        cars: (parent, args, { Car }, info) => {
+        cars: (parent, args, { User, Car }, info) => {
             try {
-                return Car.findAll()
+                return Car.findAll({ include: User })
             } catch (err) {
                 return err.message
             }
         },
-        car: async (parent, { id }, { Car }, info) => {
+        car: async (parent, { id }, { User, Car }, info) => {
             try {
-                const thing = await Car.findByPk(id)
+                const thing = await Car.findByPk(id, {
+                    include: User,
+                })
                 if (thing) return thing
                 return null
             } catch (err) {
@@ -29,10 +32,12 @@ export const resolvers: Resolvers = {
         },
     },
     Mutation: {
-        createCar: (parent, args, { Car }, info) => {
+        createCar: (parent, { data }, { Car }, info) => {
             try {
-                // const id = uuid.v4()
-                return Car.create({ ...args })
+                const id = uuidv4()
+                const { ...args } = data
+                console.log(args)
+                return Car.create({ id, ...args })
             } catch (err) {
                 console.error(err)
             }

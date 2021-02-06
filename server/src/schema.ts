@@ -8,15 +8,16 @@ const schema = gql`
         id: String
         username: String
         password: String
+        email: String
     }
 
     type Car {
         id: String
-        isActive: String
+        isActive: Boolean
         make: String
         model: String
         year: String
-        userId: String
+        userID: String
         User: User
         vin: String
     }
@@ -30,15 +31,15 @@ const schema = gql`
         user(id: String!): User
     }
     input CreateCarInput {
-        isActive: String!
+        isActive: Boolean!
         make: String!
         model: String!
         year: String!
         vin: String!
-        userId: String!
+        userID: String!
     }
     input UpdateCarInput {
-        isActive: String!
+        isActive: Boolean!
         make: String!
         model: String!
         year: String!

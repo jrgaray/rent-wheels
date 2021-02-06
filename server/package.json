@@ -12,7 +12,8 @@
     "pg-hstore": "^2.3.3",
     "postgres": "^1.0.2",
     "sequelize": "^6.5.0",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
@@ -21,7 +22,8 @@
     "@graphql-codegen/cli": "1.20.1",
     "@graphql-codegen/introspection": "1.18.1",
     "@graphql-codegen/typescript": "1.20.2",
-    "@graphql-codegen/typescript-resolvers": "1.18.1"
+    "@graphql-codegen/typescript-resolvers": "1.18.1",
+    "@types/uuid": "^8.3.0"
   },
   "scripts": {
     "start": "tsc && node build/start.js",
