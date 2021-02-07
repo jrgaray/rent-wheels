@@ -12,9 +12,9 @@ const Unknown: FC = () => {
 const App = () => {
     return (
         <>
-            <NavBar />
             <div>
                 <BrowserRouter>
+                    <NavBar />
                     <Switch>
                         <Route exact path='/' component={Login} />
                         <Route exact path='/cars' component={Cars} />

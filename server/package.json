@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "tsc && node build/start.js",
-    "build": "tsc ./src/start.ts",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "gqlTypes": "graphql-codegen --config codegen.yml"
   },

@@ -6,6 +6,7 @@ import CreateCarDialog from 'components/common/CreateCarDialog'
 export type DialogComponents = {
     createCar: FunctionComponent
     updateCar: FunctionComponent
+    createUser: FunctionComponent
 }
 
 export type DialogComponentTypes = keyof DialogComponents
