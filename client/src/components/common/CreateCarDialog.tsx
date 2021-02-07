@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useMutation } from '@apollo/client'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import {
@@ -11,10 +11,17 @@ import ControlledText from './ControlledText'
 import { CREATE_CAR } from 'gql/mutations'
 import { CreateCarOutput } from 'gql/types'
 import { CreateCarInputValues } from './types'
-const CreateCarDialog = () => {
+import { useDispatch } from 'app/store'
+import { closeDialog } from 'ducks/dialogSlice'
+import getCars from 'thunks/getCars'
+
+const CreateCarDialog: FC = () => {
+    const dispatch = useDispatch()
     const [createCar] = useMutation<CreateCarOutput>(CREATE_CAR, {
         onCompleted: data => {
             console.log(data)
+            dispatch(getCars())
+            dispatch(closeDialog())
         },
     })
     const { handleSubmit, register, errors } = useForm()

@@ -1,10 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect } from 'react'
 import styled from 'styled-components'
 import { Container as MuiContainer, List, Paper, Fab } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import CarItem from 'components/routes/cars/CarItem'
-import { useDispatch } from 'app/store'
+import { useDispatch, useSelector } from 'app/store'
 import { openDialog } from 'ducks/dialogSlice'
+import getCars from 'thunks/getCars'
 
 const Container = styled(MuiContainer)`
     && {
@@ -25,20 +26,23 @@ const StyledFab = styled(Fab)`
 
 const Cars: FC = () => {
     const dispatch = useDispatch()
+    const { cars } = useSelector(state => state.cars)
+    useEffect(() => {
+        dispatch(getCars())
+    }, [dispatch])
     return (
         <Container component={Paper}>
             <List>
-                <CarItem
-                    divider={false}
-                    image='https://img.hmn.com/fit-in/900x506/filters:upscale()/stories/2019/08/66765526-770-0@2X.jpg'
-                    vin='2FAHP71W97X130953'
-                    isActive={true}
-                    make='Lamborgini'
-                    model='Aventador'
-                    year='2020'
-                    id={'asdlkfj12dkj'}
-                    userId='12kjhdsajk123jk'
-                />
+                {cars.map(carDetails => {
+                    return (
+                        <CarItem
+                            key={carDetails.id}
+                            divider={false}
+                            image='https://img.hmn.com/fit-in/900x506/filters:upscale()/stories/2019/08/66765526-770-0@2X.jpg'
+                            {...carDetails}
+                        />
+                    )
+                })}
             </List>
             <StyledFab onClick={() => dispatch(openDialog('createCar'))}>
                 <AddIcon />

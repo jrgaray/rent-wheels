@@ -5,11 +5,11 @@ import Cars from 'components/routes/cars'
 import NavBar from 'components/common/NavBar'
 import DialogController from 'components/common/DialogController'
 
-const What: FC = () => {
-    return <div>huh</div>
+const Unknown: FC = () => {
+    return <div>404 Ooops something is wrong</div>
 }
 
-function App() {
+const App = () => {
     return (
         <>
             <NavBar />
@@ -18,7 +18,7 @@ function App() {
                     <Switch>
                         <Route exact path='/' component={Login} />
                         <Route exact path='/cars' component={Cars} />
-                        <Route path='*' component={What} />
+                        <Route path='*' component={Unknown} />
                     </Switch>
                     <DialogController />
                 </BrowserRouter>

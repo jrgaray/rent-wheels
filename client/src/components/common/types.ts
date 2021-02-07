@@ -8,6 +8,14 @@ export type DialogComponents = {
     // deleteCar: FunctionComponent
 }
 
+export interface CreateCarProps {
+    refetch: Function
+}
+
+interface UpdateCarProps extends CreateCarProps {}
+
+export type DialogComponentProps = CreateCarProps | UpdateCarProps
+
 export type DialogComponentTypes = keyof DialogComponents
 
 export interface ControlledTextProps {

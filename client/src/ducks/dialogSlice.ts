@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DialogComponentTypes } from 'components/common/types'
+import {
+    DialogComponentTypes,
+    DialogComponentProps,
+} from 'components/common/types'
 
 interface DialogState {
     type: DialogComponentTypes | null
+    props: DialogComponentProps | null
 }
 
 const initialState = { type: null } as DialogState

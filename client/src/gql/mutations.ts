@@ -13,3 +13,9 @@ export const CREATE_CAR = gql`
         }
     }
 `
+
+export const DELETE_CAR = gql`
+    mutation deleteCar($id: String!) {
+        deleteCar(id: $id)
+    }
+`

@@ -17,3 +17,7 @@ interface Car {
 export interface CreateCarInput extends Omit<Car, 'id' | 'User'> {}
 
 export interface CreateCarOutput extends Car {}
+
+export interface CarsOutput {
+    cars: Omit<Car, 'User'>[]
+}

@@ -7,6 +7,11 @@ import {
 } from '@material-ui/core'
 import styled from 'styled-components'
 import { Delete } from '@material-ui/icons'
+import { CarItemProps } from './types'
+import { DELETE_CAR } from 'gql/mutations'
+import { useMutation } from '@apollo/client'
+import { useDispatch } from 'app/store'
+import getCars from 'thunks/getCars'
 const StyledImage = styled.img`
     object-fit: cover;
     margin-right: 8px;
@@ -21,18 +26,6 @@ const StyledListItem = styled(ListItem)`
     }
 `
 
-type CarItemProps = {
-    divider: boolean
-    image: string
-    vin: string
-    isActive: boolean
-    make: string
-    model: string
-    year: string
-    id: string
-    userId: string
-}
-
 const CarItem: FC<CarItemProps> = ({
     divider,
     image,
@@ -42,13 +35,22 @@ const CarItem: FC<CarItemProps> = ({
     model,
     year,
     id,
-    userId,
+    userID,
 }) => {
+    const dispatch = useDispatch()
+    const [deleteCar] = useMutation<string>(DELETE_CAR, {
+        onCompleted: () => {
+            dispatch(getCars())
+        },
+    })
+    const handleDelete = () => {
+        deleteCar({ variables: { id } })
+    }
     return (
         <StyledListItem
             onClick={() => console.log('listItem')}
             button
-            divider={true}>
+            divider={divider}>
             <StyledImage alt='car-image' src={image} />
             <ListItemText
                 primaryTypographyProps={{
@@ -67,7 +69,7 @@ const CarItem: FC<CarItemProps> = ({
                 primary={`${year} ${make} ${model}`}
             />
             <ListItemSecondaryAction>
-                <IconButton onClick={() => console.log('delete')} edge='end'>
+                <IconButton onClick={handleDelete} edge='end'>
                     <Delete />
                 </IconButton>
             </ListItemSecondaryAction>
