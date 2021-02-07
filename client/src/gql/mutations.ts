@@ -14,6 +14,14 @@ export const CREATE_CAR = gql`
     }
 `
 
+export const UPDATE_CAR = gql`
+    mutation updateCar($data: UpdateCarInput!) {
+        updateCar(data: $data) {
+            id
+        }
+    }
+`
+
 export const DELETE_CAR = gql`
     mutation deleteCar($id: String!) {
         deleteCar(id: $id)

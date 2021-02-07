@@ -1,20 +1,12 @@
 import { TextField } from '@material-ui/core'
 import { FunctionComponent } from 'react'
 import { DeepMap, FieldError, UseFormMethods } from 'react-hook-form'
+import CreateCarDialog from 'components/common/CreateCarDialog'
 
 export type DialogComponents = {
     createCar: FunctionComponent
-    // updateCar: FunctionComponent
-    // deleteCar: FunctionComponent
+    updateCar: FunctionComponent
 }
-
-export interface CreateCarProps {
-    refetch: Function
-}
-
-interface UpdateCarProps extends CreateCarProps {}
-
-export type DialogComponentProps = CreateCarProps | UpdateCarProps
 
 export type DialogComponentTypes = keyof DialogComponents
 
@@ -24,11 +16,4 @@ export interface ControlledTextProps {
     label: string
     name: string
     textFieldProps?: React.ComponentProps<typeof TextField>
-}
-
-export interface CreateCarInputValues {
-    make: string
-    model: string
-    year: string
-    vin: string
 }

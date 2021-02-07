@@ -4,24 +4,19 @@ import { closeDialog } from 'ducks/dialogSlice'
 import { useDispatch, useSelector } from 'app/store'
 import { DialogComponents } from 'components/common/types'
 import CreateCarDialog from './CreateCarDialog'
+import UpdateCarDialog from './UpdateCarDialog'
 
 export const DIALOG_COMPONENTS: DialogComponents = {
     createCar: CreateCarDialog,
-    // updateCar: UpdateCarDialog,
-    // deleteCar: DeleteCarDialog,
+    updateCar: UpdateCarDialog,
 }
 
 const DialogController: FunctionComponent = () => {
     const dispatch = useDispatch()
     const { type } = useSelector(state => state.dialog)
+    const handleClose = () => dispatch(closeDialog())
 
-    const handleClose = () => {
-        dispatch(closeDialog())
-    }
-
-    if (!type) {
-        return null
-    }
+    if (!type) return null
 
     const ComponentDialog = DIALOG_COMPONENTS[type]
 

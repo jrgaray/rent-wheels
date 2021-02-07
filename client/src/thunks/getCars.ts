@@ -2,15 +2,15 @@ import { Action, ThunkAction } from '@reduxjs/toolkit'
 import { RootState } from 'app/types'
 import client from 'app/client'
 import { CARS } from 'gql/queries'
-import { CarsOutput } from 'gql/types'
-import { setCars } from 'ducks/carsSlice'
+import { CarsQueryOutput } from 'gql/types'
+import { setCars } from 'ducks/carListSlice'
 
 const getCars = (): ThunkAction<void, RootState, null, Action> => {
     return async (dispatch, getState) => {
         try {
-            const { data } = await client.query<CarsOutput>({
+            const { data } = await client.query<CarsQueryOutput>({
                 query: CARS,
-                fetchPolicy: 'network-only',
+                fetchPolicy: 'no-cache',
             })
             dispatch(setCars(data.cars))
         } catch (err) {

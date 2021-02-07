@@ -66,6 +66,7 @@ export type UpdateCarInput = {
   model: Scalars['String'];
   year: Scalars['String'];
   id: Scalars['String'];
+  vin: Scalars['String'];
 };
 
 export type CreateUserInput = {

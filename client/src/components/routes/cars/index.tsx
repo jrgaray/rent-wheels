@@ -9,7 +9,8 @@ import getCars from 'thunks/getCars'
 
 const Container = styled(MuiContainer)`
     && {
-        height: calc(100vh - 64px);
+        height: 100%;
+        min-height: calc(100vh - 64px);
         transform: translate3d(0, 0, 0);
     }
 ` as typeof MuiContainer
@@ -26,10 +27,8 @@ const StyledFab = styled(Fab)`
 
 const Cars: FC = () => {
     const dispatch = useDispatch()
-    const { cars } = useSelector(state => state.cars)
-    useEffect(() => {
-        dispatch(getCars())
-    }, [dispatch])
+    const { cars } = useSelector(state => state.carList)
+    useEffect(() => dispatch(getCars()), [dispatch])
     return (
         <Container component={Paper}>
             <List>
@@ -37,14 +36,14 @@ const Cars: FC = () => {
                     return (
                         <CarItem
                             key={carDetails.id}
-                            divider={false}
                             image='https://img.hmn.com/fit-in/900x506/filters:upscale()/stories/2019/08/66765526-770-0@2X.jpg'
                             {...carDetails}
                         />
                     )
                 })}
             </List>
-            <StyledFab onClick={() => dispatch(openDialog('createCar'))}>
+            <StyledFab
+                onClick={() => dispatch(openDialog({ type: 'createCar' }))}>
                 <AddIcon />
             </StyledFab>
         </Container>

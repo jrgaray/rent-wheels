@@ -44,6 +44,7 @@ const schema = gql`
         model: String!
         year: String!
         id: String!
+        vin: String!
     }
     input CreateUserInput {
         username: String

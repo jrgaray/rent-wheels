@@ -12,6 +12,9 @@ import { DELETE_CAR } from 'gql/mutations'
 import { useMutation } from '@apollo/client'
 import { useDispatch } from 'app/store'
 import getCars from 'thunks/getCars'
+import { openDialog } from 'ducks/dialogSlice'
+import { batch } from 'react-redux'
+import { setCar } from 'ducks/carSlice'
 const StyledImage = styled.img`
     object-fit: cover;
     margin-right: 8px;
@@ -27,7 +30,6 @@ const StyledListItem = styled(ListItem)`
 `
 
 const CarItem: FC<CarItemProps> = ({
-    divider,
     image,
     vin,
     isActive,
@@ -39,18 +41,19 @@ const CarItem: FC<CarItemProps> = ({
 }) => {
     const dispatch = useDispatch()
     const [deleteCar] = useMutation<string>(DELETE_CAR, {
-        onCompleted: () => {
-            dispatch(getCars())
-        },
+        onCompleted: () => dispatch(getCars()),
+        onError: err => console.error(err.message),
     })
-    const handleDelete = () => {
-        deleteCar({ variables: { id } })
+    const handleDelete = () => deleteCar({ variables: { id } })
+    const handleEdit = () => {
+        batch(() => {
+            dispatch(setCar({ id, vin, isActive, make, model, year }))
+            dispatch(openDialog({ type: 'updateCar' }))
+        })
     }
+
     return (
-        <StyledListItem
-            onClick={() => console.log('listItem')}
-            button
-            divider={divider}>
+        <StyledListItem onClick={handleEdit} button divider={true}>
             <StyledImage alt='car-image' src={image} />
             <ListItemText
                 primaryTypographyProps={{
