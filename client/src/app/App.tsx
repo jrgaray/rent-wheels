@@ -5,6 +5,7 @@ import Cars from 'components/routes/cars'
 import NavBar from 'components/common/NavBar'
 import DialogController from 'components/common/DialogController'
 import Notification from 'components/common/Notification'
+import PrivateRoute from 'components/common/PrivateRoute'
 
 const Unknown: FC = () => {
     return <div>404 Ooops something is wrong</div>
@@ -18,7 +19,7 @@ const App = () => {
                     <NavBar />
                     <Switch>
                         <Route exact path='/' component={Login} />
-                        <Route exact path='/cars' component={Cars} />
+                        <PrivateRoute exact path='/cars' component={Cars} />
                         <Route path='*' component={Unknown} />
                     </Switch>
                     <DialogController />

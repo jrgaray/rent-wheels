@@ -22,14 +22,6 @@ const schema = gql`
         vin: String
     }
 
-    # The "Query" type is special: it lists all of the available queries that
-    # clients can execute, along with the return type for each. In this
-    # case, the "books" query returns an array of zero or more Books (defined above).
-    type Query {
-        cars: [Car]!
-        # car(id: String!): Car
-        user(username: String!, password: String!): User!
-    }
     input CreateCarInput {
         isActive: Boolean!
         make: String!
@@ -50,6 +42,13 @@ const schema = gql`
         username: String
         password: String
         email: String
+    }
+
+    # The "Query" type is special: it lists all of the available queries that
+    # clients can execute, along with the return type for each.
+    type Query {
+        cars: [Car]!
+        user(username: String!, password: String!): User!
     }
 
     type Mutation {

@@ -1,9 +1,12 @@
 import { Resolvers } from './generated/graphql'
 import { v4 as uuidv4 } from 'uuid'
 import { ApolloError } from 'apollo-server'
-// Resolvers define the technique for fetching the types defined in the
-// schema. This resolver retrieves books from the "books" array above.
 
+// Resolvers define the technique for fetching the types defined in the
+// schema.
+
+// Info: Contains information about the operation's execution state,
+// including the field name, the path to the field from the root, and more.
 export const resolvers: Resolvers = {
     Query: {
         cars: (parent, args, { User, Car }, info) => {

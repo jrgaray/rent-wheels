@@ -73,8 +73,8 @@ Car.init(
         timestamps: false,
     }
 )
-
-User.hasMany(Car, { foreignKey: { name: 'userID' } })
+// Many to One Relationship
+User.hasMany(Car, { foreignKey: 'userID' })
 Car.belongsTo(User, { foreignKey: 'userID' })
 
 export interface DatabaseObject {
