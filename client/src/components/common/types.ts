@@ -1,7 +1,7 @@
 import { TextField } from '@material-ui/core'
+import { Car, User } from 'gql/types'
 import { FunctionComponent } from 'react'
 import { DeepMap, FieldError, UseFormMethods } from 'react-hook-form'
-import CreateCarDialog from 'components/common/CreateCarDialog'
 
 export type DialogComponents = {
     createCar: FunctionComponent
@@ -18,3 +18,8 @@ export interface ControlledTextProps {
     name: string
     textFieldProps?: React.ComponentProps<typeof TextField>
 }
+
+export interface CreateUserFormValues extends Omit<User, 'id'> {}
+export interface CreateCarFormValues extends Omit<Car, 'id' | 'User'> {}
+export interface UpdateCarFormValues
+    extends Omit<Car, 'userID' | 'User' | 'id' | 'isActive'> {}

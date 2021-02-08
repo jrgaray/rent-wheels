@@ -8,11 +8,18 @@ import {
     CardContent,
     Typography,
 } from '@material-ui/core'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import ControlledText from 'components/common/ControlledText'
 import styled from 'styled-components'
 import { useDispatch } from 'app/store'
 import { openDialog } from 'ducks/dialogSlice'
+import { setUser } from 'ducks/userSlice'
+
+import { useLazyQuery } from '@apollo/client'
+import { USER } from 'gql/queries'
+import { UserQueryInput, UserQueryOutput } from 'gql/types'
+import { UserFormValues } from './types'
+import { openNotification } from 'ducks/notificationSlice'
 
 const Container = styled.div`
     display: flex;
@@ -44,8 +51,20 @@ const Login: FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit = () => {
-        history.push('/cars')
+    const [getUser] = useLazyQuery<UserQueryOutput, UserQueryInput>(USER, {
+        onCompleted: ({ user }) => {
+            dispatch(setUser(user))
+            history.push('/cars')
+        },
+        onError: err => {
+            dispatch(openNotification({ type: 'error', message: err.message }))
+        },
+    })
+    const onSubmit: SubmitHandler<UserFormValues> = ({
+        username,
+        password,
+    }) => {
+        getUser({ variables: { username, password } })
     }
     return (
         <Container>

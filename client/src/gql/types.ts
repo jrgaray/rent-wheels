@@ -1,4 +1,7 @@
-interface User {
+//*****************************************************************/
+//                          Models
+//*****************************************************************/
+export interface User {
     id: string
     username: string
     password: string
@@ -15,6 +18,9 @@ export interface Car {
     User: User
 }
 
+//*****************************************************************/
+//                          Queries
+//*****************************************************************/
 export interface CarsQueryOutput {
     cars: Omit<Car, 'User'>[]
 }
@@ -24,20 +30,29 @@ export interface CarQueryInput {
 export interface CarQueryOutput {
     car: Omit<Car, 'user'>
 }
+export interface UserQueryInput extends Omit<User, 'id' | 'email'> {}
 export interface UserQueryOutput {
     user: Omit<User, 'password'>
 }
 
+//*****************************************************************/
+//                          Mutations
+//*****************************************************************/
+
 export interface CreateCarMutationInput {
-    make: string
-    model: string
-    year: string
-    vin: string
+    data: Omit<Car, 'id' | 'User'>
 }
 
-export interface UpdateCarMutationInput extends CreateCarMutationInput {
-    isActive: boolean
+export interface UpdateCarMutationInput {
+    data: Omit<Car, 'userID' | 'User'>
 }
 
 export interface CreateCarMutationOutput extends Car {}
 export interface UpdateCarMutationOutput extends Car {}
+
+export interface CreateUserMutationInput {
+    data: Omit<User, 'id'>
+}
+export interface CreateUserMutationOutput {
+    createUser: User
+}

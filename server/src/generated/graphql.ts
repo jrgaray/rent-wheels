@@ -37,18 +37,13 @@ export type Car = {
 export type Query = {
   __typename?: 'Query';
   cars: Array<Maybe<Car>>;
-  car?: Maybe<Car>;
-  user?: Maybe<User>;
-};
-
-
-export type QueryCarArgs = {
-  id: Scalars['String'];
+  user: User;
 };
 
 
 export type QueryUserArgs = {
-  id: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type CreateCarInput = {
@@ -100,7 +95,7 @@ export type MutationDeleteCarArgs = {
 
 
 export type MutationCreateUserArgs = {
-  data?: Maybe<CreateUserInput>;
+  data: CreateUserInput;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -228,15 +223,14 @@ export type CarResolvers<ContextType = DatabaseObject, ParentType extends Resolv
 
 export type QueryResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   cars?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType>;
-  car?: Resolver<Maybe<ResolversTypes['Car']>, ParentType, ContextType, RequireFields<QueryCarArgs, 'id'>>;
-  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'username' | 'password'>>;
 }>;
 
 export type MutationResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createCar?: Resolver<ResolversTypes['Car'], ParentType, ContextType, RequireFields<MutationCreateCarArgs, 'data'>>;
   updateCar?: Resolver<ResolversTypes['Car'], ParentType, ContextType, RequireFields<MutationUpdateCarArgs, 'data'>>;
   deleteCar?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteCarArgs, 'id'>>;
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, never>>;
+  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>;
 }>;
 
 export type Resolvers<ContextType = DatabaseObject> = ResolversObject<{

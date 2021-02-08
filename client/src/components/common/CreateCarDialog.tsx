@@ -13,17 +13,21 @@ import { CreateCarMutationInput, CreateCarMutationOutput } from 'gql/types'
 import { useDispatch } from 'app/store'
 import { closeDialog } from 'ducks/dialogSlice'
 import getCars from 'thunks/getCars'
+import { CreateCarFormValues } from './types'
 
 const CreateCarDialog: FC = () => {
     const dispatch = useDispatch()
-    const [createCar] = useMutation<CreateCarMutationOutput>(CREATE_CAR, {
+    const [createCar] = useMutation<
+        CreateCarMutationOutput,
+        CreateCarMutationInput
+    >(CREATE_CAR, {
         onCompleted: data => {
             dispatch(getCars())
             dispatch(closeDialog())
         },
     })
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit: SubmitHandler<CreateCarMutationInput> = ({
+    const onSubmit: SubmitHandler<CreateCarFormValues> = ({
         make,
         model,
         year,

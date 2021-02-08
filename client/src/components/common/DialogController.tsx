@@ -6,7 +6,7 @@ import { DialogComponents } from 'components/common/types'
 import { TransitionProps } from '@material-ui/core/transitions'
 import CreateCarDialog from 'components/common/CreateCarDialog'
 import UpdateCarDialog from 'components/common/UpdateCarDialog'
-import CreateUserAccount from 'components/common/CreateUserAccountDialog'
+import CreateUserAccount from 'components/common/CreateUserDialog'
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },

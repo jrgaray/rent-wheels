@@ -14,6 +14,7 @@ import getCars from 'thunks/getCars'
 import { UpdateCarMutationInput, UpdateCarMutationOutput } from 'gql/types'
 import { UPDATE_CAR } from 'gql/mutations'
 import { clearCar } from 'ducks/carSlice'
+import { UpdateCarFormValues } from './types'
 
 const UpdateCarDialog: FC = () => {
     const dispatch = useDispatch()
@@ -24,14 +25,17 @@ const UpdateCarDialog: FC = () => {
         },
         [dispatch]
     )
-    const [updateCar] = useMutation<UpdateCarMutationOutput>(UPDATE_CAR, {
+    const [updateCar] = useMutation<
+        UpdateCarMutationOutput,
+        UpdateCarMutationInput
+    >(UPDATE_CAR, {
         onCompleted: data => {
             dispatch(getCars())
             dispatch(closeDialog())
         },
     })
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit: SubmitHandler<UpdateCarMutationInput> = ({
+    const onSubmit: SubmitHandler<UpdateCarFormValues> = ({
         make,
         model,
         year,

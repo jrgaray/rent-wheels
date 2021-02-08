@@ -27,8 +27,8 @@ const schema = gql`
     # case, the "books" query returns an array of zero or more Books (defined above).
     type Query {
         cars: [Car]!
-        car(id: String!): Car
-        user(id: String!): User
+        # car(id: String!): Car
+        user(username: String!, password: String!): User!
     }
     input CreateCarInput {
         isActive: Boolean!
@@ -56,7 +56,7 @@ const schema = gql`
         createCar(data: CreateCarInput!): Car!
         updateCar(data: UpdateCarInput!): Car!
         deleteCar(id: String!): String!
-        createUser(data: CreateUserInput): User
+        createUser(data: CreateUserInput!): User
     }
 `
 
