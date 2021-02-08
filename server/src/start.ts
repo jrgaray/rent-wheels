@@ -6,6 +6,6 @@ require('@babel/polyfill')
 require('dotenv').config()
 
 // Import the rest of our application.
-module.exports = require('./server.js')
+module.exports = require('./server.ts')
 
 // Source: https://timonweb.com/javascript/how-to-enable-es6-imports-in-nodejs/
