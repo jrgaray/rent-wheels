@@ -1,5 +1,11 @@
 import React, { FC } from 'react'
+import styled from 'styled-components'
+
 import { useHistory } from 'react-router-dom'
+import { useLazyQuery } from '@apollo/client'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch } from 'app/store'
+
 import {
     Link,
     Button,
@@ -8,18 +14,15 @@ import {
     CardContent,
     Typography,
 } from '@material-ui/core'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import ControlledText from 'components/common/ControlledText'
-import styled from 'styled-components'
-import { useDispatch } from 'app/store'
+
 import { openDialog } from 'ducks/dialogSlice'
 import { setUser } from 'ducks/userSlice'
+import { openNotification } from 'ducks/notificationSlice'
 
-import { useLazyQuery } from '@apollo/client'
 import { USER } from 'gql/queries'
 import { UserQueryInput, UserQueryOutput } from 'gql/types'
 import { UserFormValues } from './types'
-import { openNotification } from 'ducks/notificationSlice'
 
 const Container = styled.div`
     display: flex;
@@ -50,7 +53,8 @@ const StyledCardActions = styled(CardActions)`
 const Login: FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
-    const { handleSubmit, register, errors } = useForm()
+
+    // Wait to get the user.
     const [getUser] = useLazyQuery<UserQueryOutput, UserQueryInput>(USER, {
         onCompleted: ({ user }) => {
             dispatch(setUser(user))
@@ -60,12 +64,14 @@ const Login: FC = () => {
             dispatch(openNotification({ type: 'error', message: err.message }))
         },
     })
-    const onSubmit: SubmitHandler<UserFormValues> = ({
-        username,
-        password,
-    }) => {
+
+    // Form Hook
+    const { handleSubmit, register, errors } = useForm()
+
+    // onSubmit handler
+    const onSubmit: SubmitHandler<UserFormValues> = ({ username, password }) =>
         getUser({ variables: { username, password } })
-    }
+
     return (
         <Container>
             <StyledCard>
