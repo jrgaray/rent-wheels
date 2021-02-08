@@ -11,7 +11,6 @@ export const resolvers: Resolvers = {
     Query: {
         carsByUserID: (parent, { id }, { User, Car }, info) => {
             try {
-                console.log(id)
                 return Car.findAll({
                     order: [['createdAt', 'DESC']],
                     include: User,
