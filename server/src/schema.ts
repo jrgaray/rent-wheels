@@ -1,14 +1,16 @@
 import { gql } from 'apollo-server'
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
 const schema = gql`
+    # --------------------------
+    #           Types
+    # --------------------------
     type User {
         id: String
         username: String
         password: String
         email: String
+        createdAt: String
+        updatedAt: String
     }
 
     type Car {
@@ -20,8 +22,13 @@ const schema = gql`
         userID: String
         User: User
         vin: String
+        createdAt: String
+        updatedAt: String
     }
 
+    # --------------------------
+    #           Inputs
+    # --------------------------
     input CreateCarInput {
         isActive: Boolean!
         make: String!
@@ -30,6 +37,7 @@ const schema = gql`
         vin: String!
         userID: String!
     }
+
     input UpdateCarInput {
         isActive: Boolean!
         make: String!
@@ -38,19 +46,25 @@ const schema = gql`
         id: String!
         vin: String!
     }
+
     input CreateUserInput {
         username: String
         password: String
         email: String
     }
 
-    # The "Query" type is special: it lists all of the available queries that
-    # clients can execute, along with the return type for each.
+    # --------------------------
+    #          Queries
+    # --------------------------
     type Query {
         cars: [Car]!
+        carsByUserID(id: String!): [Car]!
         user(username: String!, password: String!): User!
     }
 
+    # --------------------------
+    #          Mutations
+    # --------------------------
     type Mutation {
         createCar(data: CreateCarInput!): Car!
         updateCar(data: UpdateCarInput!): Car!

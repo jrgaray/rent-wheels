@@ -61,7 +61,13 @@ export type CreateUserInput = {
 export type Query = {
   __typename?: 'Query';
   cars: Array<Maybe<Car>>;
+  carsByUserID: Array<Maybe<Car>>;
   user: User;
+};
+
+
+export type QueryCarsByUserIdArgs = {
+  id: Scalars['String'];
 };
 
 
@@ -223,6 +229,7 @@ export type CarResolvers<ContextType = DatabaseObject, ParentType extends Resolv
 
 export type QueryResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   cars?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType>;
+  carsByUserID?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType, RequireFields<QueryCarsByUserIdArgs, 'id'>>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'username' | 'password'>>;
 }>;
 

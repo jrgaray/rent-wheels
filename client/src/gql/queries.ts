@@ -10,6 +10,20 @@ export const USER = gql`
     }
 `
 
+export const CARS_BY_USER_ID = gql`
+    query carByUser($id: String!) {
+        carsByUserID(id: $id) {
+            id
+            isActive
+            make
+            model
+            year
+            userID
+            vin
+        }
+    }
+`
+
 export const CARS = gql`
     query cars {
         cars {

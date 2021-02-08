@@ -9,6 +9,18 @@ import { ApolloError } from 'apollo-server'
 // including the field name, the path to the field from the root, and more.
 export const resolvers: Resolvers = {
     Query: {
+        carsByUserID: (parent, { id }, { User, Car }, info) => {
+            try {
+                console.log(id)
+                return Car.findAll({
+                    order: [['createdAt', 'DESC']],
+                    include: User,
+                    where: { userID: id },
+                })
+            } catch (err) {
+                throw new ApolloError('Could not get car list.')
+            }
+        },
         cars: (parent, args, { User, Car }, info) => {
             try {
                 return Car.findAll({ include: User })
@@ -18,13 +30,15 @@ export const resolvers: Resolvers = {
         },
         user: async (parent, { username, password }, { User }, info) => {
             try {
+                if (!username || !password)
+                    throw new Error('Missing username/password.')
                 const user = await User.findOne({
                     where: { username, password },
                 })
                 if (user) return user
-                throw new Error()
+                throw new Error('No user with those credentials')
             } catch (err) {
-                throw new ApolloError('Invalid credentials. No user was found.')
+                throw new ApolloError(err)
             }
         },
     },

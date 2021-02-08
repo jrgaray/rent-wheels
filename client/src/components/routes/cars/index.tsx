@@ -5,6 +5,7 @@ import AddIcon from '@material-ui/icons/Add'
 import CarItem from 'components/routes/cars/CarItem'
 import { useDispatch, useSelector } from 'app/store'
 import { openDialog } from 'ducks/dialogSlice'
+import { clearCars } from 'ducks/carListSlice'
 import getCars from 'thunks/getCars'
 
 const Container = styled(MuiContainer)`
@@ -28,7 +29,12 @@ const StyledFab = styled(Fab)`
 const Cars: FC = () => {
     const dispatch = useDispatch()
     const { cars } = useSelector(state => state.carList)
-    useEffect(() => dispatch(getCars()), [dispatch])
+    useEffect(() => {
+        dispatch(getCars())
+        return () => {
+            dispatch(clearCars())
+        }
+    }, [dispatch])
     return (
         <Container component={Paper}>
             <List>

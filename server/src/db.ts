@@ -1,6 +1,9 @@
 import { Sequelize, DataTypes, Model } from 'sequelize'
 
-const sequelize = new Sequelize(process.env.DATABASE_URL ?? '', {
+// Type guard.
+if (!process.env.DATABASE_URL) throw new Error('No database url defined.')
+
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
 })
 
@@ -31,7 +34,7 @@ User.init(
         modelName: 'User',
         sequelize,
         tableName: 'User',
-        timestamps: false,
+        timestamps: true,
     }
 )
 Car.init(
@@ -70,7 +73,7 @@ Car.init(
         modelName: 'Car',
         sequelize,
         tableName: 'Car',
-        timestamps: false,
+        timestamps: true,
     }
 )
 // Many to One Relationship

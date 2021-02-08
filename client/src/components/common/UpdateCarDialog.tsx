@@ -15,6 +15,7 @@ import { UpdateCarMutationInput, UpdateCarMutationOutput } from 'gql/types'
 import { UPDATE_CAR } from 'gql/mutations'
 import { clearCar } from 'ducks/carSlice'
 import { UpdateCarFormValues } from './types'
+import { openNotification } from 'ducks/notificationSlice'
 
 const UpdateCarDialog: FC = () => {
     const dispatch = useDispatch()
@@ -25,6 +26,7 @@ const UpdateCarDialog: FC = () => {
         },
         [dispatch]
     )
+    // Mutation Hook
     const [updateCar] = useMutation<
         UpdateCarMutationOutput,
         UpdateCarMutationInput
@@ -33,15 +35,22 @@ const UpdateCarDialog: FC = () => {
             dispatch(getCars())
             dispatch(closeDialog())
         },
+        onError: error =>
+            dispatch(
+                openNotification({ type: 'error', message: error.message })
+            ),
     })
+
+    // Form Hook
     const { handleSubmit, register, errors } = useForm()
+
+    // Submit handler.
     const onSubmit: SubmitHandler<UpdateCarFormValues> = ({
         make,
         model,
         year,
         vin,
     }) => {
-        console.log('submit edit')
         updateCar({
             variables: {
                 data: {

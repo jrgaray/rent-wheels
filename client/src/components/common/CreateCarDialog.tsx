@@ -10,13 +10,15 @@ import {
 import ControlledText from './ControlledText'
 import { CREATE_CAR } from 'gql/mutations'
 import { CreateCarMutationInput, CreateCarMutationOutput } from 'gql/types'
-import { useDispatch } from 'app/store'
+import { useDispatch, useSelector } from 'app/store'
 import { closeDialog } from 'ducks/dialogSlice'
 import getCars from 'thunks/getCars'
 import { CreateCarFormValues } from './types'
+import { openNotification } from 'ducks/notificationSlice'
 
 const CreateCarDialog: FC = () => {
     const dispatch = useDispatch()
+    const user = useSelector(state => state.user)
     const [createCar] = useMutation<
         CreateCarMutationOutput,
         CreateCarMutationInput
@@ -25,6 +27,10 @@ const CreateCarDialog: FC = () => {
             dispatch(getCars())
             dispatch(closeDialog())
         },
+        onError: error =>
+            dispatch(
+                openNotification({ type: 'error', message: error.message })
+            ),
     })
     const { handleSubmit, register, errors } = useForm()
     const onSubmit: SubmitHandler<CreateCarFormValues> = ({
@@ -33,18 +39,27 @@ const CreateCarDialog: FC = () => {
         year,
         vin,
     }) => {
-        createCar({
-            variables: {
-                data: {
-                    make,
-                    model,
-                    year,
-                    vin,
-                    isActive: true,
-                    userID: 'test',
+        if (user.id) {
+            createCar({
+                variables: {
+                    data: {
+                        make,
+                        model,
+                        year,
+                        vin,
+                        isActive: true,
+                        userID: user.id,
+                    },
                 },
-            },
-        })
+            })
+        } else {
+            dispatch(
+                openNotification({
+                    type: 'error',
+                    message: 'Huh, how are you here?',
+                })
+            )
+        }
     }
     return (
         <>

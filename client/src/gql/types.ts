@@ -21,8 +21,12 @@ export interface Car {
 //*****************************************************************/
 //                          Queries
 //*****************************************************************/
-export interface CarsQueryOutput {
-    cars: Omit<Car, 'User'>[]
+export interface CarsByUserIDQueryInput {
+    id: string
+}
+
+export interface CarsByUserIDQueryOutput {
+    carsByUserID: Omit<Car, 'User'>[]
 }
 export interface CarQueryInput {
     id: string

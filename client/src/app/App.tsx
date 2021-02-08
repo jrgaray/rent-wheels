@@ -8,25 +8,21 @@ import Notification from 'components/common/Notification'
 import PrivateRoute from 'components/common/PrivateRoute'
 
 const Unknown: FC = () => {
-    return <div>404 Ooops something is wrong</div>
+    return <div>404? Idk something is wrong</div>
 }
 
-const App = () => {
+const App: FC = () => {
     return (
-        <>
-            <div>
-                <BrowserRouter>
-                    <NavBar />
-                    <Switch>
-                        <Route exact path='/' component={Login} />
-                        <PrivateRoute exact path='/cars' component={Cars} />
-                        <Route path='*' component={Unknown} />
-                    </Switch>
-                    <DialogController />
-                    <Notification />
-                </BrowserRouter>
-            </div>
-        </>
+        <BrowserRouter>
+            <NavBar />
+            <Switch>
+                <Route exact path='/' component={Login} />
+                <PrivateRoute exact path='/cars' component={Cars} />
+                <Route path='*' component={Unknown} />
+            </Switch>
+            <DialogController />
+            <Notification />
+        </BrowserRouter>
     )
 }
 

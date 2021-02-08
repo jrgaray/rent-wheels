@@ -13,6 +13,7 @@ import { CreateUserMutationInput, CreateUserMutationOutput } from 'gql/types'
 import { useDispatch } from 'app/store'
 import { closeDialog } from 'ducks/dialogSlice'
 import { CreateUserFormValues } from './types'
+import { openNotification } from 'ducks/notificationSlice'
 
 const CreateUserDialog: FC = () => {
     const dispatch = useDispatch()
@@ -23,7 +24,10 @@ const CreateUserDialog: FC = () => {
         onCompleted: data => {
             dispatch(closeDialog())
         },
-        onError: error => console.error(error.message),
+        onError: error =>
+            dispatch(
+                openNotification({ type: 'error', message: error.message })
+            ),
     })
     const { handleSubmit, register, errors } = useForm()
     const onSubmit: SubmitHandler<CreateUserFormValues> = ({
