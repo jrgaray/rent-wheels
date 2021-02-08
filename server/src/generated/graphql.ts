@@ -34,18 +34,6 @@ export type Car = {
   vin?: Maybe<Scalars['String']>;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  cars: Array<Maybe<Car>>;
-  user: User;
-};
-
-
-export type QueryUserArgs = {
-  username: Scalars['String'];
-  password: Scalars['String'];
-};
-
 export type CreateCarInput = {
   isActive: Scalars['Boolean'];
   make: Scalars['String'];
@@ -68,6 +56,18 @@ export type CreateUserInput = {
   username?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+};
+
+export type Query = {
+  __typename?: 'Query';
+  cars: Array<Maybe<Car>>;
+  user: User;
+};
+
+
+export type QueryUserArgs = {
+  username: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Mutation = {
@@ -181,10 +181,10 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<any>;
   Car: ResolverTypeWrapper<any>;
   Boolean: ResolverTypeWrapper<any>;
-  Query: ResolverTypeWrapper<{}>;
   CreateCarInput: ResolverTypeWrapper<any>;
   UpdateCarInput: ResolverTypeWrapper<any>;
   CreateUserInput: ResolverTypeWrapper<any>;
+  Query: ResolverTypeWrapper<{}>;
   Mutation: ResolverTypeWrapper<{}>;
 }>;
 
@@ -194,10 +194,10 @@ export type ResolversParentTypes = ResolversObject<{
   String: any;
   Car: any;
   Boolean: any;
-  Query: {};
   CreateCarInput: any;
   UpdateCarInput: any;
   CreateUserInput: any;
+  Query: {};
   Mutation: {};
 }>;
 

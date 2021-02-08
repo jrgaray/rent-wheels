@@ -1,3 +1,4 @@
+# Get docker image.
 FROM node:14-alpine 
 
 # Create Directory for the Container
