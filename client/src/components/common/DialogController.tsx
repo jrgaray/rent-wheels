@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react'
+import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'app/store'
 
 import { closeDialog } from 'ducks/dialogSlice'
@@ -9,7 +9,11 @@ import UpdateCarDialog from 'components/common/UpdateCarDialog'
 import CreateUserDialog from 'components/common/CreateUserDialog'
 
 import { TransitionProps } from '@material-ui/core/transitions'
-import { DialogComponents } from 'components/common/types'
+import {
+    DialogComponents,
+    DialogComponentTypes,
+    DialogComponentPropTypes,
+} from 'components/common/types'
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },
@@ -24,12 +28,32 @@ const DIALOG_COMPONENTS: DialogComponents = {
     createUser: CreateUserDialog,
 }
 
-const DialogController: FunctionComponent = () => {
+const selectDialog = (
+    type: DialogComponentTypes,
+    props: DialogComponentPropTypes | null
+) => {
+    switch (type) {
+        case 'updateCar':
+            const UpdateDialog = DIALOG_COMPONENTS[type]
+            return (
+                <UpdateDialog
+                    {...(props as React.ComponentProps<typeof UpdateCarDialog>)}
+                />
+            )
+        case 'createCar':
+        case 'createUser':
+        default:
+            let ComponentDialog = DIALOG_COMPONENTS[type]
+            return <ComponentDialog />
+    }
+}
+
+const DialogController: FC = () => {
     const dispatch = useDispatch()
-    const { type } = useSelector(state => state.dialog)
+    const { type, props } = useSelector(state => state.dialog)
     const handleClose = () => dispatch(closeDialog())
+
     if (!type) return null
-    const Component = DIALOG_COMPONENTS[type]
 
     return (
         <Dialog
@@ -37,7 +61,7 @@ const DialogController: FunctionComponent = () => {
             open
             onClose={handleClose}
             aria-labelledby='form-dialog-title'>
-            <Component />
+            {selectDialog(type, props)}
         </Dialog>
     )
 }

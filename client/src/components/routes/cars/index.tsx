@@ -49,7 +49,9 @@ const Cars: FC = () => {
                 })}
             </List>
             <StyledFab
-                onClick={() => dispatch(openDialog({ type: 'createCar' }))}>
+                onClick={() =>
+                    dispatch(openDialog({ type: 'createCar', props: null }))
+                }>
                 <AddIcon />
             </StyledFab>
         </Container>
