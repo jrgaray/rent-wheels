@@ -1,5 +1,4 @@
-import { Sequelize, DataTypes } from 'sequelize'
-import { Model } from 'sequelize-typescript'
+import { Sequelize, Model, DataTypes } from 'sequelize'
 
 // Type guard.
 if (!process.env.DATABASE_URL) throw new Error('No database url defined.')
