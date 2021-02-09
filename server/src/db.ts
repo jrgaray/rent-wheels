@@ -1,4 +1,5 @@
-import { Sequelize, DataTypes, Model } from 'sequelize'
+import { Sequelize, DataTypes } from 'sequelize'
+import { Model } from 'sequelize-typescript'
 
 // Type guard.
 if (!process.env.DATABASE_URL) throw new Error('No database url defined.')
@@ -7,8 +8,21 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: 'postgres',
 })
 
-class Car extends Model {}
-class User extends Model {}
+class Car extends Model {
+    public id!: string
+    public model!: string
+    public vin!: string
+    public year!: string
+    public isActive!: boolean
+    public make!: string
+    public userID!: string
+}
+class User extends Model {
+    public id!: string
+    public username!: string
+    public email!: string
+    public password!: string
+}
 
 User.init(
     {
@@ -19,6 +33,7 @@ User.init(
         },
         username: {
             allowNull: false,
+            unique: true,
             type: DataTypes.STRING,
         },
         password: {
@@ -31,10 +46,8 @@ User.init(
         },
     },
     {
-        modelName: 'User',
         sequelize,
         tableName: 'User',
-        timestamps: true,
     }
 )
 Car.init(
@@ -70,23 +83,22 @@ Car.init(
         },
     },
     {
-        modelName: 'Car',
         sequelize,
         tableName: 'Car',
-        timestamps: true,
     }
 )
 // Many to One Relationship
 User.hasMany(Car, { foreignKey: 'userID' })
 Car.belongsTo(User, { foreignKey: 'userID' })
 
+// sequelize.addModels([User, Car])
 export interface DatabaseObject {
     sequelize: Sequelize
     User: typeof User
     Car: typeof Car
 }
 
-const db: DatabaseObject = {
+const db = {
     sequelize,
     User,
     Car,

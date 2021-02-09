@@ -48,9 +48,9 @@ const schema = gql`
     }
 
     input CreateUserInput {
-        username: String
-        password: String
-        email: String
+        username: String!
+        password: String!
+        email: String!
     }
 
     # --------------------------

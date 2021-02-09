@@ -20,6 +20,8 @@ export type User = {
   username?: Maybe<Scalars['String']>;
   password?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type Car = {
@@ -32,6 +34,8 @@ export type Car = {
   userID?: Maybe<Scalars['String']>;
   User?: Maybe<User>;
   vin?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['String']>;
 };
 
 export type CreateCarInput = {
@@ -53,9 +57,9 @@ export type UpdateCarInput = {
 };
 
 export type CreateUserInput = {
-  username?: Maybe<Scalars['String']>;
-  password?: Maybe<Scalars['String']>;
-  email?: Maybe<Scalars['String']>;
+  username: Scalars['String'];
+  password: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type Query = {
@@ -212,6 +216,8 @@ export type UserResolvers<ContextType = DatabaseObject, ParentType extends Resol
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -224,6 +230,8 @@ export type CarResolvers<ContextType = DatabaseObject, ParentType extends Resolv
   userID?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   User?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   vin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updatedAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

@@ -12,7 +12,7 @@ const setUpDatabase: () => Promise<void> = async () => {
         // Sync between the models in sequelize and the tables in
         // the database. If there are tables in sequelize that aren't
         // already present in the database, create the table.
-        await db.sequelize.sync()
+        await db.sequelize.sync({ force: true })
     } catch (error) {
         console.error('Unable to connect to the database:', error)
     }
