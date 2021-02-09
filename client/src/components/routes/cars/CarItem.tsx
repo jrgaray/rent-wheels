@@ -40,11 +40,15 @@ const CarItem: FC<CarItemProps> = ({
     id,
 }) => {
     const dispatch = useDispatch()
+
+    // Mutation hook
     const [deleteCar] = useMutation<string>(DELETE_CAR, {
         onCompleted: () => dispatch(getCars()),
         onError: err =>
             dispatch(openNotification({ type: 'error', message: err.message })),
     })
+
+    // Click handlers
     const handleDelete = () => deleteCar({ variables: { id } })
     const handleEdit = () => {
         batch(() => {

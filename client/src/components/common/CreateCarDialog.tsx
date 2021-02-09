@@ -7,7 +7,8 @@ import {
     DialogContent,
     DialogTitle,
 } from '@material-ui/core'
-import ControlledText from './ControlledText'
+import ControlledText from 'components/common/ControlledText'
+import ControlledCheckbox from 'components/common/ControlledCheckbox'
 import { CREATE_CAR } from 'gql/mutations'
 import { CreateCarMutationInput, CreateCarMutationOutput } from 'gql/types'
 import { useDispatch, useSelector } from 'app/store'
@@ -16,7 +17,7 @@ import getCars from 'thunks/getCars'
 import { CreateCarFormValues } from './types'
 import { openNotification } from 'ducks/notificationSlice'
 
-const CreateCarDialog: FC = () => {
+const CreateCarDialog: FC<{ testProp: string }> = () => {
     const dispatch = useDispatch()
     const { id: userID } = useSelector(state => state.user)
 
@@ -33,7 +34,7 @@ const CreateCarDialog: FC = () => {
                 openNotification({ type: 'error', message: error.message })
             ),
     })
-    const { handleSubmit, register, errors } = useForm()
+    const { handleSubmit, register, errors, control } = useForm()
 
     // Submit handler
     const onSubmit: SubmitHandler<CreateCarFormValues> = formValues =>
@@ -42,7 +43,6 @@ const CreateCarDialog: FC = () => {
                   variables: {
                       data: {
                           ...formValues,
-                          isActive: true,
                           userID,
                       },
                   },
@@ -56,11 +56,7 @@ const CreateCarDialog: FC = () => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <DialogTitle
-                id='form-dialog-title'
-                data-testid='login-dialog-header'>
-                Add Car
-            </DialogTitle>
+            <DialogTitle>Add Car</DialogTitle>
             <DialogContent>
                 <ControlledText
                     register={() => register({ required: true })}
@@ -85,6 +81,11 @@ const CreateCarDialog: FC = () => {
                     label='VIN'
                     name='vin'
                     errors={errors}
+                />
+                <ControlledCheckbox
+                    name='isActive'
+                    control={control}
+                    label='Active'
                 />
             </DialogContent>
             <DialogActions>

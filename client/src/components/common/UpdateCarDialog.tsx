@@ -1,21 +1,25 @@
 import React, { FC, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'app/store'
+
+import { closeDialog } from 'ducks/dialogSlice'
+import { clearCar } from 'ducks/carSlice'
+import getCars from 'thunks/getCars'
+import { openNotification } from 'ducks/notificationSlice'
+
 import {
     Button,
     DialogActions,
     DialogContent,
     DialogTitle,
 } from '@material-ui/core'
-import ControlledText from './ControlledText'
-import { useDispatch, useSelector } from 'app/store'
-import { closeDialog } from 'ducks/dialogSlice'
-import getCars from 'thunks/getCars'
+import ControlledText from 'components/common/ControlledText'
+import ControlledCheckbox from 'components/common/ControlledCheckbox'
+
 import { UpdateCarMutationInput, UpdateCarMutationOutput } from 'gql/types'
 import { UPDATE_CAR } from 'gql/mutations'
-import { clearCar } from 'ducks/carSlice'
-import { UpdateCarFormValues } from './types'
-import { openNotification } from 'ducks/notificationSlice'
+import { UpdateCarFormValues } from 'components/common/types'
 
 const UpdateCarDialog: FC = () => {
     const dispatch = useDispatch()
@@ -42,7 +46,7 @@ const UpdateCarDialog: FC = () => {
     })
 
     // Form Hook
-    const { handleSubmit, register, errors } = useForm()
+    const { handleSubmit, register, errors, control } = useForm()
 
     // Submit handler.
     const onSubmit: SubmitHandler<UpdateCarFormValues> = ({
@@ -66,7 +70,7 @@ const UpdateCarDialog: FC = () => {
     }
     return (
         <>
-            <DialogTitle id='form-dialog-title'>Update Car</DialogTitle>
+            <DialogTitle>Update Car</DialogTitle>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogContent>
                     <ControlledText
@@ -96,6 +100,11 @@ const UpdateCarDialog: FC = () => {
                         label='VIN'
                         name='vin'
                         errors={errors}
+                    />
+                    <ControlledCheckbox
+                        name='isActive'
+                        control={control}
+                        label='Active'
                     />
                 </DialogContent>
                 <DialogActions>

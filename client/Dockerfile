@@ -8,10 +8,12 @@ WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 # install app dependencies
-COPY package.json .
-COPY yarn.lock .
+COPY package.json . 
+COPY yarn.lock . 
+COPY tsconfig.json . 
+
 RUN yarn --silent
-RUN yarn add react-scripts@4.0.2 -g --silent
+RUN yarn add global react-scripts@4.0.2 --silent
 
 # add app
 COPY . .

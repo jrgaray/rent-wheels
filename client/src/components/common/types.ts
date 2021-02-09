@@ -1,12 +1,14 @@
 import { TextField } from '@material-ui/core'
 import { Car, User } from 'gql/types'
-import { FunctionComponent } from 'react'
 import { DeepMap, FieldError, UseFormMethods } from 'react-hook-form'
+import CreateCarDialog from './CreateCarDialog'
+import CreateUserDialog from './CreateUserDialog'
+import UpdateCarDialog from './UpdateCarDialog'
 
 export type DialogComponents = {
-    createCar: FunctionComponent
-    updateCar: FunctionComponent
-    createUser: FunctionComponent
+    createCar: typeof CreateCarDialog
+    updateCar: typeof UpdateCarDialog
+    createUser: typeof CreateUserDialog
 }
 
 export type DialogComponentTypes = keyof DialogComponents
@@ -17,6 +19,12 @@ export interface ControlledTextProps {
     label: string
     name: string
     textFieldProps?: React.ComponentProps<typeof TextField>
+}
+
+export interface ControlledCheckboxProps {
+    control: UseFormMethods['control']
+    name: string
+    label: string
 }
 
 export interface CreateUserFormValues extends Omit<User, 'id'> {}
