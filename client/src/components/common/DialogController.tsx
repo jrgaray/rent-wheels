@@ -23,64 +23,23 @@ const DIALOG_COMPONENTS: DialogComponents = {
     updateCar: UpdateCarDialog,
     createUser: CreateUserDialog,
 }
-type dialogComponentProps = {
-    createCar: { testProps: string }
-}
 
-// const getComponent = (type: 'createCar' | 'updateCar' | 'createUser') => {
-//     let component:
-//         | typeof CreateCarDialog
-//         | typeof UpdateCarDialog
-//         | typeof CreateUserDialog
-
-//     switch (type) {
-//         case 'createCar':
-//             const props = { testProp: 'test' }
-//             return React.cloneElement(CreateCarDialog, props)
-//         case 'updateCar':
-//             return DIALOG_COMPONENTS['updateCar']
-//         default:
-//             break
-//     }
-// }
-
-type CreateCarDialogProps = {
-    testProp: string
-}
 const DialogController: FunctionComponent = () => {
     const dispatch = useDispatch()
     const { type } = useSelector(state => state.dialog)
     const handleClose = () => dispatch(closeDialog())
-    const props = {}
-
     if (!type) return null
+    const Component = DIALOG_COMPONENTS[type]
 
-    let ComponentDialog = DIALOG_COMPONENTS[type]
-    const teest = { testProp: 'asDf' }
-
-    if (type === 'createCar') {
-        ComponentDialog = DIALOG_COMPONENTS[type]
-        return (
-            <Dialog
-                TransitionComponent={Transition}
-                open
-                onClose={handleClose}
-                aria-labelledby='form-dialog-title'>
-                <ComponentDialog {...teest} />
-            </Dialog>
-        )
-    } else {
-        let ComponentDialog = DIALOG_COMPONENTS[type]
-        return (
-            <Dialog
-                TransitionComponent={Transition}
-                open
-                onClose={handleClose}
-                aria-labelledby='form-dialog-title'>
-                <ComponentDialog />
-            </Dialog>
-        )
-    }
+    return (
+        <Dialog
+            TransitionComponent={Transition}
+            open
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'>
+            <Component />
+        </Dialog>
+    )
 }
 
 export default DialogController
