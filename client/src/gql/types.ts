@@ -7,6 +7,7 @@ export interface User {
     password: string
     email: string
 }
+
 export interface Car {
     id: string
     isActive: boolean
@@ -24,16 +25,10 @@ export interface Car {
 export interface CarsByUserIDQueryInput {
     id: string
 }
-
 export interface CarsByUserIDQueryOutput {
     carsByUserID: Omit<Car, 'User'>[]
 }
-export interface CarQueryInput {
-    id: string
-}
-export interface CarQueryOutput {
-    car: Omit<Car, 'user'>
-}
+
 export interface UserQueryInput extends Omit<User, 'id' | 'email'> {}
 export interface UserQueryOutput {
     user: Omit<User, 'password'>
@@ -46,17 +41,16 @@ export interface UserQueryOutput {
 export interface CreateCarMutationInput {
     data: Omit<Car, 'id' | 'User'>
 }
+export interface CreateCarMutationOutput extends Car {}
 
 export interface UpdateCarMutationInput {
     data: Omit<Car, 'userID' | 'User'>
 }
-
-export interface CreateCarMutationOutput extends Car {}
 export interface UpdateCarMutationOutput extends Car {}
 
 export interface CreateUserMutationInput {
     data: Omit<User, 'id'>
 }
 export interface CreateUserMutationOutput {
-    createUser: User
+    createUser: Omit<User, 'password'>
 }

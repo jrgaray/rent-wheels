@@ -31,7 +31,7 @@ const UpdateCarDialog: FC = () => {
         UpdateCarMutationOutput,
         UpdateCarMutationInput
     >(UPDATE_CAR, {
-        onCompleted: data => {
+        onCompleted: () => {
             dispatch(getCars())
             dispatch(closeDialog())
         },

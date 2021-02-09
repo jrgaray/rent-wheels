@@ -14,61 +14,71 @@ import { useDispatch } from 'app/store'
 import { closeDialog } from 'ducks/dialogSlice'
 import { CreateUserFormValues } from './types'
 import { openNotification } from 'ducks/notificationSlice'
+import { setUser } from 'ducks/userSlice'
+import { batch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 const CreateUserDialog: FC = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
+
+    // CreateUser mutation
     const [createUser] = useMutation<
         CreateUserMutationOutput,
         CreateUserMutationInput
     >(CREATE_USER, {
-        onCompleted: data => {
-            dispatch(closeDialog())
+        // Set the user, close the dialog and push the user to the cars page.
+        onCompleted: ({ createUser }) => {
+            batch(() => {
+                dispatch(setUser(createUser))
+                dispatch(closeDialog())
+            })
+            history.push('/cars')
         },
+        // Open notification.
         onError: error =>
             dispatch(
                 openNotification({ type: 'error', message: error.message })
             ),
     })
+
+    // Hook for form.
     const { handleSubmit, register, errors } = useForm()
-    const onSubmit: SubmitHandler<CreateUserFormValues> = ({
-        username,
-        password,
-        email,
-    }) => {
-        createUser({ variables: { data: { username, password, email } } })
-    }
+
+    // onSubmit handler
+    const onSubmit: SubmitHandler<CreateUserFormValues> = formValues =>
+        createUser({ variables: { data: { ...formValues } } })
+
     return (
-        <>
+        <form onSubmit={handleSubmit(onSubmit)}>
             <DialogTitle id='form-dialog-title'>Create an Account</DialogTitle>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <DialogContent>
-                    <ControlledText
-                        register={() => register({ required: true })}
-                        label='Email'
-                        name='email'
-                        errors={errors}
-                    />
-                    <ControlledText
-                        register={() => register({ required: true })}
-                        label='Username'
-                        name='username'
-                        errors={errors}
-                    />
-                    <ControlledText
-                        register={() => register({ required: true })}
-                        label='Password'
-                        name='password'
-                        errors={errors}
-                        textFieldProps={{ type: 'password' }}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button type='submit' color='primary' variant='contained'>
-                        Submit
-                    </Button>
-                </DialogActions>
-            </form>
-        </>
+            <DialogContent>
+                <ControlledText
+                    register={() => register({ required: true })}
+                    label='Email'
+                    name='email'
+                    errors={errors}
+                />
+                <ControlledText
+                    register={() => register({ required: true })}
+                    label='Username'
+                    name='username'
+                    errors={errors}
+                />
+                <ControlledText
+                    register={() => register({ required: true })}
+                    label='Password'
+                    name='password'
+                    errors={errors}
+                    textFieldProps={{ type: 'password' }}
+                />
+            </DialogContent>
+            <DialogActions>
+                <Button type='submit' color='primary' variant='contained'>
+                    Submit
+                </Button>
+            </DialogActions>
+        </form>
     )
 }
 

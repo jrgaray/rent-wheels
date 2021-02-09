@@ -23,17 +23,3 @@ export const CARS_BY_USER_ID = gql`
         }
     }
 `
-
-export const CARS = gql`
-    query cars {
-        cars {
-            id
-            isActive
-            make
-            model
-            year
-            userID
-            vin
-        }
-    }
-`

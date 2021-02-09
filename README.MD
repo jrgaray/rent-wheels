@@ -8,10 +8,12 @@ Technologies of note used in this application are:
 
 -   React
 -   Redux
+-   Create-React-App
 -   GraphQL
 -   Apollo Client/Server
 -   Typescript
 -   Node.js
+-   Postgres/ElephantSQL
 -   Material-UI
 -   styled-components
 -   react-hook-form

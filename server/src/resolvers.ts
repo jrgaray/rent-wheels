@@ -66,12 +66,19 @@ export const resolvers: Resolvers = {
                 throw new ApolloError('Could not delete car.')
             }
         },
-        createUser: (parent, { data }, { User }, info) => {
+        createUser: async (parent, { data }, { User }, info) => {
             try {
+                const prevUser = await User.findOne({
+                    where: { username: data.username },
+                })
+                if (prevUser)
+                    throw new Error(
+                        'Username is already associated to another user.'
+                    )
                 const id = uuidv4()
                 return User.create({ id, ...data })
             } catch (err) {
-                throw new ApolloError('Could not create user.')
+                throw new ApolloError(err)
             }
         },
     },
