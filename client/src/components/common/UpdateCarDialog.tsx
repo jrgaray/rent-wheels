@@ -1,10 +1,9 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC } from 'react'
 import { useMutation } from '@apollo/client'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'app/store'
+import { useDispatch } from 'app/store'
 
 import { closeDialog } from 'ducks/dialogSlice'
-import { clearCar } from 'ducks/carSlice'
 import getCars from 'thunks/getCars'
 import { openNotification } from 'ducks/notificationSlice'
 
@@ -19,17 +18,20 @@ import ControlledCheckbox from 'components/common/ControlledCheckbox'
 
 import { UpdateCarMutationInput, UpdateCarMutationOutput } from 'gql/types'
 import { UPDATE_CAR } from 'gql/mutations'
-import { UpdateCarFormValues } from 'components/common/types'
+import {
+    UpdateCarFormValues,
+    UpdateCarDialogProps,
+} from 'components/common/types'
 
-const UpdateCarDialog: FC = () => {
+const UpdateCarDialog: FC<UpdateCarDialogProps> = ({
+    id,
+    make,
+    model,
+    year,
+    vin,
+    isActive,
+}) => {
     const dispatch = useDispatch()
-    const car = useSelector(state => state.car)
-    useEffect(
-        () => () => {
-            dispatch(clearCar())
-        },
-        [dispatch]
-    )
     // Mutation Hook
     const [updateCar] = useMutation<
         UpdateCarMutationOutput,
@@ -49,21 +51,13 @@ const UpdateCarDialog: FC = () => {
     const { handleSubmit, register, errors, control } = useForm()
 
     // Submit handler.
-    const onSubmit: SubmitHandler<UpdateCarFormValues> = ({
-        make,
-        model,
-        year,
-        vin,
-    }) => {
+    const onSubmit: SubmitHandler<UpdateCarFormValues> = formValues => {
+        console.log(formValues.isActive)
         updateCar({
             variables: {
                 data: {
-                    id: car.id,
-                    isActive: true,
-                    make,
-                    model,
-                    year,
-                    vin,
+                    id,
+                    ...formValues,
                 },
             },
         })
@@ -74,28 +68,28 @@ const UpdateCarDialog: FC = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <DialogContent>
                     <ControlledText
-                        textFieldProps={{ defaultValue: car.make }}
+                        textFieldProps={{ defaultValue: make }}
                         register={() => register({ required: true })}
                         label='Make'
                         name='make'
                         errors={errors}
                     />
                     <ControlledText
-                        textFieldProps={{ defaultValue: car.model }}
+                        textFieldProps={{ defaultValue: model }}
                         register={() => register({ required: true })}
                         label='Model'
                         name='model'
                         errors={errors}
                     />
                     <ControlledText
-                        textFieldProps={{ defaultValue: car.year }}
+                        textFieldProps={{ defaultValue: year }}
                         register={() => register({ required: true })}
                         label='Year'
                         name='year'
                         errors={errors}
                     />
                     <ControlledText
-                        textFieldProps={{ defaultValue: car.vin }}
+                        textFieldProps={{ defaultValue: vin }}
                         register={() => register({ required: true })}
                         label='VIN'
                         name='vin'
@@ -105,6 +99,7 @@ const UpdateCarDialog: FC = () => {
                         name='isActive'
                         control={control}
                         label='Active'
+                        defaultValue={isActive}
                     />
                 </DialogContent>
                 <DialogActions>

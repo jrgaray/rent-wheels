@@ -13,16 +13,12 @@ const Notification: FunctionComponent = () => {
     if (!type) return null
     return (
         <Snackbar
-            data-testid='notification'
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             autoHideDuration={3000}
             open
             onClose={handleClose}
             message={message}>
-            <Alert
-                onClose={handleClose}
-                severity={type}
-                data-testid='alert-message'>
+            <Alert onClose={handleClose} severity={type}>
                 {message}
             </Alert>
         </Snackbar>

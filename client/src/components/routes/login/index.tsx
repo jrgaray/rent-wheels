@@ -112,7 +112,12 @@ const Login: FC = () => {
                             type='button'
                             variant='caption'
                             onClick={() =>
-                                dispatch(openDialog({ type: 'createUser' }))
+                                dispatch(
+                                    openDialog({
+                                        type: 'createUser',
+                                        props: null,
+                                    })
+                                )
                             }>
                             Create Account
                         </Link>

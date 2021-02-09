@@ -14,7 +14,6 @@ import {
 import { Delete } from '@material-ui/icons'
 
 import getCars from 'thunks/getCars'
-import { setCar } from 'ducks/carSlice'
 import { openDialog } from 'ducks/dialogSlice'
 import { openNotification } from 'ducks/notificationSlice'
 
@@ -52,8 +51,12 @@ const CarItem: FC<CarItemProps> = ({
     const handleDelete = () => deleteCar({ variables: { id } })
     const handleEdit = () => {
         batch(() => {
-            dispatch(setCar({ id, vin, isActive, make, model, year }))
-            dispatch(openDialog({ type: 'updateCar' }))
+            dispatch(
+                openDialog({
+                    type: 'updateCar',
+                    props: { id, vin, isActive, make, model, year },
+                })
+            )
         })
     }
 

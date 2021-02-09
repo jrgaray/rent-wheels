@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactElement } from 'react'
+import React, { FC } from 'react'
 import { useDispatch, useSelector } from 'app/store'
 
 import { closeDialog } from 'ducks/dialogSlice'
@@ -9,7 +9,11 @@ import UpdateCarDialog from 'components/common/UpdateCarDialog'
 import CreateUserDialog from 'components/common/CreateUserDialog'
 
 import { TransitionProps } from '@material-ui/core/transitions'
-import { DialogComponents } from 'components/common/types'
+import {
+    DialogComponents,
+    DialogComponentTypes,
+    DialogComponentPropTypes,
+} from 'components/common/types'
 
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement<any, any> },
@@ -23,64 +27,43 @@ const DIALOG_COMPONENTS: DialogComponents = {
     updateCar: UpdateCarDialog,
     createUser: CreateUserDialog,
 }
-type dialogComponentProps = {
-    createCar: { testProps: string }
+
+const selectDialog = (
+    type: DialogComponentTypes,
+    props: DialogComponentPropTypes | null
+) => {
+    switch (type) {
+        case 'updateCar':
+            const UpdateDialog = DIALOG_COMPONENTS[type]
+            return (
+                <UpdateDialog
+                    {...(props as React.ComponentProps<typeof UpdateCarDialog>)}
+                />
+            )
+        case 'createCar':
+        case 'createUser':
+        default:
+            let ComponentDialog = DIALOG_COMPONENTS[type]
+            return <ComponentDialog />
+    }
 }
 
-// const getComponent = (type: 'createCar' | 'updateCar' | 'createUser') => {
-//     let component:
-//         | typeof CreateCarDialog
-//         | typeof UpdateCarDialog
-//         | typeof CreateUserDialog
-
-//     switch (type) {
-//         case 'createCar':
-//             const props = { testProp: 'test' }
-//             return React.cloneElement(CreateCarDialog, props)
-//         case 'updateCar':
-//             return DIALOG_COMPONENTS['updateCar']
-//         default:
-//             break
-//     }
-// }
-
-type CreateCarDialogProps = {
-    testProp: string
-}
-const DialogController: FunctionComponent = () => {
+const DialogController: FC = () => {
     const dispatch = useDispatch()
-    const { type } = useSelector(state => state.dialog)
+    const { type, props } = useSelector(state => state.dialog)
     const handleClose = () => dispatch(closeDialog())
-    const props = {}
 
     if (!type) return null
 
-    let ComponentDialog = DIALOG_COMPONENTS[type]
-    const teest = { testProp: 'asDf' }
-
-    if (type === 'createCar') {
-        ComponentDialog = DIALOG_COMPONENTS[type]
-        return (
-            <Dialog
-                TransitionComponent={Transition}
-                open
-                onClose={handleClose}
-                aria-labelledby='form-dialog-title'>
-                <ComponentDialog {...teest} />
-            </Dialog>
-        )
-    } else {
-        let ComponentDialog = DIALOG_COMPONENTS[type]
-        return (
-            <Dialog
-                TransitionComponent={Transition}
-                open
-                onClose={handleClose}
-                aria-labelledby='form-dialog-title'>
-                <ComponentDialog />
-            </Dialog>
-        )
-    }
+    return (
+        <Dialog
+            TransitionComponent={Transition}
+            open
+            onClose={handleClose}
+            aria-labelledby='form-dialog-title'>
+            {selectDialog(type, props)}
+        </Dialog>
+    )
 }
 
 export default DialogController

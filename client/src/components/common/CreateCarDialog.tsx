@@ -17,7 +17,7 @@ import getCars from 'thunks/getCars'
 import { CreateCarFormValues } from './types'
 import { openNotification } from 'ducks/notificationSlice'
 
-const CreateCarDialog: FC<{ testProp: string }> = () => {
+const CreateCarDialog: FC = () => {
     const dispatch = useDispatch()
     const { id: userID } = useSelector(state => state.user)
 
