@@ -13,6 +13,7 @@ const initialState = {
     id: null,
     email: null,
 } as UserState
+
 const userSlice = createSlice({
     name: 'user',
     initialState,

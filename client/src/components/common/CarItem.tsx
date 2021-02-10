@@ -18,7 +18,7 @@ import { openDialog } from 'ducks/dialogSlice'
 import { openNotification } from 'ducks/notificationSlice'
 
 import { DELETE_CAR } from 'gql/mutations'
-import { CarItemProps } from 'components/routes/cars/types'
+import { CarItemProps } from 'components/types'
 
 const StyledImage = styled.img`
     object-fit: cover;
