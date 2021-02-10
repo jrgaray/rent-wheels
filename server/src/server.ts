@@ -1,7 +1,13 @@
 import { ApolloServer } from 'apollo-server'
-import db from './db'
+import db, { User } from './db'
 import typeDefs from './schema'
 import { resolvers } from './resolvers'
+import { getUser } from './utils'
+
+export interface Context {
+    user: User | null
+    db: typeof db
+}
 
 const setUpDatabase: () => Promise<void> = async () => {
     try {
@@ -12,7 +18,7 @@ const setUpDatabase: () => Promise<void> = async () => {
         // Sync between the models in sequelize and the tables in
         // the database. If there are tables in sequelize that aren't
         // already present in the database, create the table.
-        await db.sequelize.sync({ force: true })
+        await db.sequelize.sync()
     } catch (error) {
         console.error('Unable to connect to the database:', error)
     }
@@ -25,7 +31,13 @@ const initDatabaseAndGraphQLServer: () => Promise<void> = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
-        context: db,
+        context: async ({ req, res }) => {
+            const user = req.headers.authorization
+                ? await getUser(req.headers.authorization)
+                : null
+
+            return { user, db }
+        },
     })
 
     // The `listen` method launches a web server.

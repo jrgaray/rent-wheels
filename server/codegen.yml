@@ -19,7 +19,7 @@ generates:
             defaultMapper: any
 
             # Allows typing of context within resolvers.
-            contextType: ../db#DatabaseObject
+            contextType: ../server#Context
 
         # The plugins I used to generate the code.
         plugins:

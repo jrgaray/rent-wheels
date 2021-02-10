@@ -5,6 +5,9 @@ services:
         build: ./server
         ports:
             - 4000:4000
+        volumes:
+            - ./server:/usr/src/app
+            - /usr/src/app/node_modules
     client:
         container_name: rent_wheels_client
         build: ./client

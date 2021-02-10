@@ -1,7 +1,11 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
+import { useDispatch } from 'app/store'
 import { Link, useLocation } from 'react-router-dom'
+
+import { clearUser } from 'ducks/userSlice'
+
 import { AppBar, Toolbar, Typography, Button } from '@material-ui/core'
 
 const StyledTypography = styled(Typography)`
@@ -21,6 +25,7 @@ const StyledLink = styled(Link)`
 `
 
 const NavBar: FC = () => {
+    const dispatch = useDispatch()
     const { pathname } = useLocation()
     return (
         <StyledAppBar position='sticky'>
@@ -28,7 +33,11 @@ const NavBar: FC = () => {
                 <StyledTypography variant='h6'>Rent Wheels</StyledTypography>
                 {pathname !== '/' && (
                     <StyledLink to='/'>
-                        <Button color='inherit'>Logout</Button>
+                        <Button
+                            onClick={() => dispatch(clearUser())}
+                            color='inherit'>
+                            Logout
+                        </Button>
                     </StyledLink>
                 )}
             </Toolbar>

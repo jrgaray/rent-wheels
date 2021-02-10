@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { DatabaseObject } from '../db';
+import { Context } from '../server';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -38,6 +38,13 @@ export type Car = {
   updatedAt?: Maybe<Scalars['String']>;
 };
 
+export type TokenAuth = {
+  __typename?: 'TokenAuth';
+  token: Scalars['String'];
+  refresh: Scalars['String'];
+  user: User;
+};
+
 export type CreateCarInput = {
   isActive: Scalars['Boolean'];
   make: Scalars['String'];
@@ -64,18 +71,12 @@ export type CreateUserInput = {
 
 export type Query = {
   __typename?: 'Query';
-  cars: Array<Maybe<Car>>;
   carsByUserID: Array<Maybe<Car>>;
-  user: User;
+  login: TokenAuth;
 };
 
 
-export type QueryCarsByUserIdArgs = {
-  id: Scalars['String'];
-};
-
-
-export type QueryUserArgs = {
+export type QueryLoginArgs = {
   username: Scalars['String'];
   password: Scalars['String'];
 };
@@ -85,7 +86,7 @@ export type Mutation = {
   createCar: Car;
   updateCar: Car;
   deleteCar: Scalars['String'];
-  createUser?: Maybe<User>;
+  createUser: TokenAuth;
 };
 
 
@@ -191,6 +192,7 @@ export type ResolversTypes = ResolversObject<{
   String: ResolverTypeWrapper<any>;
   Car: ResolverTypeWrapper<any>;
   Boolean: ResolverTypeWrapper<any>;
+  TokenAuth: ResolverTypeWrapper<any>;
   CreateCarInput: ResolverTypeWrapper<any>;
   UpdateCarInput: ResolverTypeWrapper<any>;
   CreateUserInput: ResolverTypeWrapper<any>;
@@ -204,6 +206,7 @@ export type ResolversParentTypes = ResolversObject<{
   String: any;
   Car: any;
   Boolean: any;
+  TokenAuth: any;
   CreateCarInput: any;
   UpdateCarInput: any;
   CreateUserInput: any;
@@ -211,7 +214,7 @@ export type ResolversParentTypes = ResolversObject<{
   Mutation: {};
 }>;
 
-export type UserResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
+export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   username?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -221,7 +224,7 @@ export type UserResolvers<ContextType = DatabaseObject, ParentType extends Resol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type CarResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Car'] = ResolversParentTypes['Car']> = ResolversObject<{
+export type CarResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Car'] = ResolversParentTypes['Car']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   make?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -235,22 +238,29 @@ export type CarResolvers<ContextType = DatabaseObject, ParentType extends Resolv
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type QueryResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  cars?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType>;
-  carsByUserID?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType, RequireFields<QueryCarsByUserIdArgs, 'id'>>;
-  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'username' | 'password'>>;
+export type TokenAuthResolvers<ContextType = Context, ParentType extends ResolversParentTypes['TokenAuth'] = ResolversParentTypes['TokenAuth']> = ResolversObject<{
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  refresh?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type MutationResolvers<ContextType = DatabaseObject, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
+  carsByUserID?: Resolver<Array<Maybe<ResolversTypes['Car']>>, ParentType, ContextType>;
+  login?: Resolver<ResolversTypes['TokenAuth'], ParentType, ContextType, RequireFields<QueryLoginArgs, 'username' | 'password'>>;
+}>;
+
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createCar?: Resolver<ResolversTypes['Car'], ParentType, ContextType, RequireFields<MutationCreateCarArgs, 'data'>>;
   updateCar?: Resolver<ResolversTypes['Car'], ParentType, ContextType, RequireFields<MutationUpdateCarArgs, 'data'>>;
   deleteCar?: Resolver<ResolversTypes['String'], ParentType, ContextType, RequireFields<MutationDeleteCarArgs, 'id'>>;
-  createUser?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>;
+  createUser?: Resolver<ResolversTypes['TokenAuth'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'data'>>;
 }>;
 
-export type Resolvers<ContextType = DatabaseObject> = ResolversObject<{
+export type Resolvers<ContextType = Context> = ResolversObject<{
   User?: UserResolvers<ContextType>;
   Car?: CarResolvers<ContextType>;
+  TokenAuth?: TokenAuthResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
 }>;
@@ -260,4 +270,4 @@ export type Resolvers<ContextType = DatabaseObject> = ResolversObject<{
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
  */
-export type IResolvers<ContextType = DatabaseObject> = Resolvers<ContextType>;
+export type IResolvers<ContextType = Context> = Resolvers<ContextType>;

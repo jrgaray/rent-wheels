@@ -7,9 +7,7 @@ import DialogController from 'components/common/DialogController'
 import Notification from 'components/common/Notification'
 import PrivateRoute from 'components/common/PrivateRoute'
 
-const Unknown: FC = () => {
-    return <div>404? Idk something is wrong</div>
-}
+const Unknown: FC = () => <div>404? Idk something is wrong</div>
 
 const App: FC = () => {
     return (

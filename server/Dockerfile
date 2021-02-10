@@ -5,16 +5,17 @@ FROM node:14-alpine
 WORKDIR /usr/src/app
 
 # Copy files needed to build the project.
-COPY package.json ./
-COPY yarn.lock ./
-COPY tsconfig.json ./
+COPY package.json .
+COPY yarn.lock .
+COPY tsconfig.json .
 COPY ./src ./src
 
 # Once in production this can be set by ARGS and ENV
-COPY .env ./
+COPY .env .
 
 # Install dependencies
 RUN yarn 
+COPY . .
 CMD [ "yarn", "start" ]
 EXPOSE 4000
 

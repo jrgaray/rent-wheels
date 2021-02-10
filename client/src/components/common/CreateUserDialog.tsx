@@ -28,11 +28,11 @@ const CreateUserDialog: FC = () => {
         CreateUserMutationInput
     >(CREATE_USER, {
         // Set the user, close the dialog and push the user to the cars page.
-        onCompleted: ({ createUser }) => {
-            batch(() => {
-                dispatch(setUser(createUser))
-                dispatch(closeDialog())
-            })
+        onCompleted: ({ createUser: { refresh, token, user } }) => {
+            console.log('createuser', token)
+
+            dispatch(setUser({ ...user, token }))
+            dispatch(closeDialog())
             history.push('/cars')
         },
         // Open notification.
@@ -40,6 +40,7 @@ const CreateUserDialog: FC = () => {
             dispatch(
                 openNotification({ type: 'error', message: error.message })
             ),
+        fetchPolicy: 'no-cache',
     })
 
     // Hook for form.

@@ -1,18 +1,22 @@
 import { gql } from '@apollo/client'
 
-export const USER = gql`
+export const LOGIN = gql`
     query user($username: String!, $password: String!) {
-        user(username: $username, password: $password) {
-            id
-            username
-            email
+        login(username: $username, password: $password) {
+            token
+            refresh
+            user {
+                id
+                email
+                username
+            }
         }
     }
 `
 
 export const CARS_BY_USER_ID = gql`
-    query carByUser($id: String!) {
-        carsByUserID(id: $id) {
+    query carByUser {
+        carsByUserID {
             id
             isActive
             make

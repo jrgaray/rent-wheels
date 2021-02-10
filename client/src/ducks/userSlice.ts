@@ -1,23 +1,32 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface UserState {
+    token: string | null
     username: string | null
     id: string | null
     email: string | null
 }
 
-const initialState = { username: null, id: null, email: null } as UserState
+const initialState = {
+    token: null,
+    username: null,
+    id: null,
+    email: null,
+} as UserState
 const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
         setUser(
             state,
-            { payload: { username, email, id } }: PayloadAction<UserState>
+            {
+                payload: { id, email, username, token },
+            }: PayloadAction<UserState>
         ) {
-            state.email = email
-            state.id = id
+            state.token = token
             state.username = username
+            state.id = id
+            state.email = email
         },
         clearUser: state => initialState,
     },

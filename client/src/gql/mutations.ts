@@ -31,9 +31,13 @@ export const DELETE_CAR = gql`
 export const CREATE_USER = gql`
     mutation createUser($data: CreateUserInput!) {
         createUser(data: $data) {
-            id
-            username
-            email
+            token
+            refresh
+            user {
+                id
+                email
+                username
+            }
         }
     }
 `

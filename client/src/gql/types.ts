@@ -18,20 +18,22 @@ export interface Car {
     userID: string
     User: User
 }
+export interface JWTTokens {
+    token: string
+    refresh: string
+    user: User
+}
 
 //*****************************************************************/
 //                          Queries
 //*****************************************************************/
-export interface CarsByUserIDQueryInput {
-    id: string
-}
 export interface CarsByUserIDQueryOutput {
     carsByUserID: Omit<Car, 'User'>[]
 }
 
-export interface UserQueryInput extends Omit<User, 'id' | 'email'> {}
-export interface UserQueryOutput {
-    user: Omit<User, 'password'>
+export interface LoginQueryInput extends Omit<User, 'id' | 'email'> {}
+export interface LoginQueryOutput {
+    login: JWTTokens
 }
 
 //*****************************************************************/
@@ -52,5 +54,5 @@ export interface CreateUserMutationInput {
     data: Omit<User, 'id'>
 }
 export interface CreateUserMutationOutput {
-    createUser: Omit<User, 'password'>
+    createUser: JWTTokens
 }

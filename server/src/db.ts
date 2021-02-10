@@ -16,7 +16,7 @@ class Car extends Model {
     public make!: string
     public userID!: string
 }
-class User extends Model {
+export class User extends Model {
     public id!: string
     public username!: string
     public email!: string

@@ -26,6 +26,12 @@ const schema = gql`
         updatedAt: String
     }
 
+    type TokenAuth {
+        token: String!
+        refresh: String!
+        user: User!
+    }
+
     # --------------------------
     #           Inputs
     # --------------------------
@@ -57,9 +63,8 @@ const schema = gql`
     #          Queries
     # --------------------------
     type Query {
-        cars: [Car]!
-        carsByUserID(id: String!): [Car]!
-        user(username: String!, password: String!): User!
+        carsByUserID: [Car]!
+        login(username: String!, password: String!): TokenAuth!
     }
 
     # --------------------------
@@ -69,7 +74,7 @@ const schema = gql`
         createCar(data: CreateCarInput!): Car!
         updateCar(data: UpdateCarInput!): Car!
         deleteCar(id: String!): String!
-        createUser(data: CreateUserInput!): User
+        createUser(data: CreateUserInput!): TokenAuth!
     }
 `
 

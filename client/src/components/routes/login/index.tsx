@@ -20,8 +20,8 @@ import { openDialog } from 'ducks/dialogSlice'
 import { setUser } from 'ducks/userSlice'
 import { openNotification } from 'ducks/notificationSlice'
 
-import { USER } from 'gql/queries'
-import { UserQueryInput, UserQueryOutput } from 'gql/types'
+import { LOGIN } from 'gql/queries'
+import { LoginQueryInput, LoginQueryOutput } from 'gql/types'
 import { UserFormValues } from './types'
 
 const Container = styled.div`
@@ -55,9 +55,9 @@ const Login: FC = () => {
     const history = useHistory()
 
     // Wait to get the user.
-    const [getUser] = useLazyQuery<UserQueryOutput, UserQueryInput>(USER, {
-        onCompleted: ({ user }) => {
-            dispatch(setUser(user))
+    const [getUser] = useLazyQuery<LoginQueryOutput, LoginQueryInput>(LOGIN, {
+        onCompleted: ({ login: { refresh, token, user } }) => {
+            dispatch(setUser({ ...user, token }))
             history.push('/cars')
         },
         onError: err => {
