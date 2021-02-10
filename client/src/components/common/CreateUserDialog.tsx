@@ -15,7 +15,6 @@ import { closeDialog } from 'ducks/dialogSlice'
 import { CreateUserFormValues } from './types'
 import { openNotification } from 'ducks/notificationSlice'
 import { setUser } from 'ducks/userSlice'
-import { batch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
 const CreateUserDialog: FC = () => {
@@ -29,8 +28,6 @@ const CreateUserDialog: FC = () => {
     >(CREATE_USER, {
         // Set the user, close the dialog and push the user to the cars page.
         onCompleted: ({ createUser: { refresh, token, user } }) => {
-            console.log('createuser', token)
-
             dispatch(setUser({ ...user, token }))
             dispatch(closeDialog())
             history.push('/cars')

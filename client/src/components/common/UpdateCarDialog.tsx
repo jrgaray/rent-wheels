@@ -52,7 +52,6 @@ const UpdateCarDialog: FC<UpdateCarDialogProps> = ({
 
     // Submit handler.
     const onSubmit: SubmitHandler<UpdateCarFormValues> = formValues => {
-        console.log(formValues.isActive)
         updateCar({
             variables: {
                 data: {

@@ -1,8 +1,8 @@
-import { ApolloServer } from 'apollo-server'
+import { ApolloError, ApolloServer } from 'apollo-server'
 import db, { User } from './db'
 import typeDefs from './schema'
 import { resolvers } from './resolvers'
-import { getUser } from './utils'
+import { getUser, verifyJwt } from './utils'
 
 export interface Context {
     user: User | null
@@ -32,11 +32,17 @@ const initDatabaseAndGraphQLServer: () => Promise<void> = async () => {
         typeDefs,
         resolvers,
         context: async ({ req, res }) => {
-            const user = req.headers.authorization
-                ? await getUser(req.headers.authorization)
-                : null
-
-            return { user, db }
+            try {
+                if (req.headers.authorization) {
+                    verifyJwt(req.headers.authorization)
+                    const user = await getUser(req.headers.authorization)
+                    return { user, db }
+                } else {
+                    return { user: null, db }
+                }
+            } catch (err) {
+                throw new ApolloError(err)
+            }
         },
     })
 

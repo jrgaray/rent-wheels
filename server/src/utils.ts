@@ -8,13 +8,11 @@ import {
     CreateJWTFunction,
 } from './types'
 
-const SALT_ROUNDS = 10
 export const isValidPassword: IsValidPasswordFunction = (password, hash) =>
     bcrypt.compareSync(password, hash)
 
 export const hashPassword: HashPasswordFunction = async password => {
     const salt = await bcrypt.genSalt()
-    console.log('after salt')
     return bcrypt.hash(password, salt)
 }
 
@@ -40,4 +38,9 @@ export const getUser: (jwt: string) => Promise<User | null> = async (
         email: string
     } = decode(jwt)
     return db.User.findByPk(decodedJWT.id)
+}
+
+export const verifyJwt = (token: string) => {
+    if (process.env.TOKEN_SECRET)
+        return jwt.verify(token, process.env.TOKEN_SECRET)
 }

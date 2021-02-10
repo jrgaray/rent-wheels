@@ -9,7 +9,6 @@ import { openNotification } from 'ducks/notificationSlice'
 const getCars = (): ThunkAction<void, RootState, null, Action> => {
     return async (dispatch, getState) => {
         try {
-            console.log('dispatching cars by user')
             const { data } = await client.query<CarsByUserIDQueryOutput>({
                 query: CARS_BY_USER_ID,
                 fetchPolicy: 'no-cache',

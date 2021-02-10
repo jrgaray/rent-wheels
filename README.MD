@@ -86,4 +86,4 @@ The Car schema can be a simple JSON object and should include { id: string, make
 
 ## Development Process
 
-After receiving the requirements for this take home assignment, I immediately began brainstorming and planning my
+After receiving the requirements for the coding challenge, I spent the night planning out my vision for the application and this is what I came up with: ![whiteboard image](https://photos.app.goo.gl/ESzvQpCy3xEgdJBk8)
