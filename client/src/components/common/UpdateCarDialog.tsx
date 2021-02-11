@@ -81,11 +81,29 @@ const UpdateCarDialog: FC<UpdateCarDialogProps> = ({
                         errors={errors}
                     />
                     <ControlledText
-                        textFieldProps={{ defaultValue: year }}
-                        register={() => register({ required: true })}
+                        register={() =>
+                            register({
+                                required: true,
+                                pattern: {
+                                    value: /^[0-9]{4}$/,
+                                    message: 'Must be 4 digit year',
+                                },
+                                validate: (value: string) => {
+                                    const numberValue = parseInt(value)
+                                    if (!numberValue) {
+                                        return 'value must be a number'
+                                    }
+                                    if (numberValue < 1900)
+                                        return 'Must be greater than 1990'
+                                    if (numberValue > 2021)
+                                        return 'Must be less than 2021'
+                                },
+                            })
+                        }
                         label='Year'
                         name='year'
                         errors={errors}
+                        textFieldProps={{ defaultValue: year }}
                     />
                     <ControlledText
                         register={() =>
