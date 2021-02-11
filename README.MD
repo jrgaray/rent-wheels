@@ -117,7 +117,7 @@ My thought was rather than implementing client-side functionality, first build a
 My goal with this project was to:
 
 -   Show my thought process in building the application
--   Display my procficiency with several technologies
+-   Display my proficiency with several technologies
 -   Present my problem-solving skills with several technologies I'm not quite as familar with.
 
 With the time constraint and the scope of the project, some things that could be improved upon would be:
