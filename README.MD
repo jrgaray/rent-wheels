@@ -21,7 +21,7 @@ Technologies of note used in this application are:
 -   react-hook-form
 -   Docker
 
-## Contents
+## Table of Contents
 
 -   [Quickstart](#quickstart)
     -   [Prerequistes](#prerequisites)
