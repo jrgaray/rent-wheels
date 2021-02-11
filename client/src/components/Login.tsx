@@ -56,6 +56,7 @@ const Login: FC = () => {
 
     // Wait to get the user.
     const [getUser] = useLazyQuery<LoginQueryOutput, LoginQueryInput>(LOGIN, {
+        fetchPolicy: 'cache-and-network',
         onCompleted: ({ login: { refresh, token, user } }) => {
             dispatch(setUser({ ...user, token }))
             history.push('/cars')

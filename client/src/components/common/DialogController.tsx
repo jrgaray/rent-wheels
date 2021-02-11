@@ -56,11 +56,7 @@ const DialogController: FC = () => {
     if (!type) return null
 
     return (
-        <Dialog
-            TransitionComponent={Transition}
-            open
-            onClose={handleClose}
-            aria-labelledby='form-dialog-title'>
+        <Dialog TransitionComponent={Transition} open onClose={handleClose}>
             {selectDialog(type, props)}
         </Dialog>
     )

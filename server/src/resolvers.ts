@@ -1,7 +1,7 @@
 import { Resolvers } from './generated/graphql'
 import { v4 as uuidv4 } from 'uuid'
 import { ApolloError } from 'apollo-server'
-import { isValidPassword, hashPassword, createJWT, verifyJwt } from './utils'
+import { isValidPassword, hashPassword, createJWT } from './utils'
 
 // Resolvers define the technique for fetching the types defined in the
 // schema.
@@ -20,7 +20,7 @@ export const resolvers: Resolvers = {
                     where: { userID: user?.id },
                 })
             } catch (err) {
-                throw new ApolloError('Could not get car list.')
+                throw new ApolloError(err)
             }
         },
         login: async (
@@ -54,7 +54,7 @@ export const resolvers: Resolvers = {
                 const { ...args } = data
                 return Car.create({ id, ...args })
             } catch (err) {
-                throw new ApolloError('Could not create car.')
+                throw new ApolloError(err)
             }
         },
         updateCar: (
@@ -68,7 +68,7 @@ export const resolvers: Resolvers = {
                     throw new Error('Invalid action. User not logged in.')
                 return Car.update({ ...rest }, { where: { id } })
             } catch (err) {
-                throw new ApolloError('Could not update car.')
+                throw new ApolloError(err)
             }
         },
         deleteCar: async (parent, { id }, { user, db: { Car } }, info) => {

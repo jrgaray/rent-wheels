@@ -73,7 +73,6 @@ const CreateCarDialog: FC = () => {
                 <ControlledText
                     register={() =>
                         register({
-                            valueAsDate: true,
                             required: true,
                         })
                     }
