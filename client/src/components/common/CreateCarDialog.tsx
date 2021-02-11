@@ -11,7 +11,7 @@ import ControlledText from 'components/common/ControlledText'
 import ControlledCheckbox from 'components/common/ControlledCheckbox'
 import { CREATE_CAR } from 'gql/mutations'
 import { CreateCarMutationInput, CreateCarMutationOutput } from 'gql/types'
-import { useDispatch, useSelector } from 'app/store'
+import { useDispatch } from 'app/store'
 import { closeDialog } from 'ducks/dialogSlice'
 import getCars from 'thunks/getCars'
 import { CreateCarFormValues } from './types'
@@ -19,13 +19,12 @@ import { openNotification } from 'ducks/notificationSlice'
 
 const CreateCarDialog: FC = () => {
     const dispatch = useDispatch()
-    const { id: userID } = useSelector(state => state.user)
 
     const [createCar] = useMutation<
         CreateCarMutationOutput,
         CreateCarMutationInput
     >(CREATE_CAR, {
-        onCompleted: data => {
+        onCompleted: () => {
             dispatch(getCars())
             dispatch(closeDialog())
         },
@@ -38,21 +37,13 @@ const CreateCarDialog: FC = () => {
 
     // Submit handler
     const onSubmit: SubmitHandler<CreateCarFormValues> = formValues =>
-        userID
-            ? createCar({
-                  variables: {
-                      data: {
-                          ...formValues,
-                          userID,
-                      },
-                  },
-              })
-            : dispatch(
-                  openNotification({
-                      type: 'error',
-                      message: 'Huh, how are you here?',
-                  })
-              )
+        createCar({
+            variables: {
+                data: {
+                    ...formValues,
+                },
+            },
+        })
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +65,20 @@ const CreateCarDialog: FC = () => {
                     register={() =>
                         register({
                             required: true,
+                            pattern: {
+                                value: /^[0-9]{4}$/,
+                                message: 'Must be 4 digit year',
+                            },
+                            validate: (value: string) => {
+                                const numberValue = parseInt(value)
+                                if (!numberValue) {
+                                    return 'value must be a number'
+                                }
+                                if (numberValue < 1900)
+                                    return 'Must be greater than 1990'
+                                if (numberValue > 2021)
+                                    return 'Must be less than 2021'
+                            },
                         })
                     }
                     label='Year'

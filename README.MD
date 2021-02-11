@@ -20,6 +20,21 @@ Technologies of note used in this application are:
 -   react-hook-form
 -   Docker
 
+### Project Requirements
+
+Create your own single page web application that allows users to perform queries and commands to cars that they own using React as your frontend and Graphql/Node.js as your backend.
+
+-   Use Apollo Server for the backend
+-   Use React for the front end
+-   No need for a persistence layer, data can be stored in memory or in JSON files.
+-   Implement error handling
+-   BE CREATIVE
+-   Have some form of form validation.
+-   Things we'd like to see, material-ui components, React hooks, Apollo Client.
+-   (Optional) If you want, you can create a database for persistence.
+
+The Car schema can be a simple JSON object and should include { id: string, make: string, model: string, year: string, VIN: string } at a minimum.
+
     ![user_create_accounts](./img/user_create_accounts.gif)
     ![update_delete](./img/update_delete.gif)
 
@@ -68,21 +83,6 @@ Once the following is visible, the application is ready for viewing/development:
     rent_wheels_client |
 
 🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉
-
-## Project Requirements
-
-Create your own single page web application that allows users to perform queries and commands to cars that they own using React as your frontend and Graphql/Node.js as your backend.
-
--   Use Apollo Server for the backend
--   Use React for the front end
--   No need for a persistence layer, data can be stored in memory or in JSON files.
--   Implement error handling
--   BE CREATIVE
--   Have some form of form validation.
--   Things we'd like to see, material-ui components, React hooks, Apollo Client.
--   (Optional) If you want, you can create a database for persistence.
-
-The Car schema can be a simple JSON object and should include { id: string, make: string, model: string, year: string, VIN: string } at a minimum.
 
 ## Development Process
 

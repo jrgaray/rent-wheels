@@ -41,7 +41,7 @@ export interface LoginQueryOutput {
 //*****************************************************************/
 
 export interface CreateCarMutationInput {
-    data: Omit<Car, 'id' | 'User'>
+    data: Omit<Car, 'id' | 'User' | 'userID'>
 }
 export interface CreateCarMutationOutput extends Car {}
 

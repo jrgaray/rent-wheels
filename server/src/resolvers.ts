@@ -52,7 +52,7 @@ export const resolvers: Resolvers = {
                     throw new Error('Invalid action. User not logged in.')
                 const id = uuidv4()
                 const { ...args } = data
-                return Car.create({ id, ...args })
+                return Car.create({ id, ...args, userID: user.id })
             } catch (err) {
                 throw new ApolloError(err)
             }

@@ -41,7 +41,6 @@ const schema = gql`
         model: String!
         year: String!
         vin: String!
-        userID: String!
     }
 
     input UpdateCarInput {
