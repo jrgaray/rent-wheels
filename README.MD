@@ -114,12 +114,6 @@ My thought was rather than implementing client-side functionality, first build a
 
 ## Limitations and Considerations
 
-My goal with this project was to:
-
--   Show my thought process in building the application
--   Display my proficiency with several technologies
--   Present my problem-solving skills with several technologies I'm not quite as familar with.
-
 With the time constraint and the scope of the project, some things that could be improved upon would be:
 
 -   Branching strategy (dev -> stage -> prod)
