@@ -113,14 +113,16 @@ Beyond the requirements, what I completed was:
 
 My thought was rather than implementing client-side functionality, first build a secure application and a "good" development environment.
 
-## Limitations and Considerations
+## Improvements
 
-With the time constraint and the scope of the project, some things that could be improved upon would be:
+With the time constraint and the scope of the project, some things that I would want to improve upon are:
 
 -   Branching strategy (dev -> stage -> prod)
 -   Breaking up the backend files a bit more to have structure. Example: resolvers.ts houses all of the queries and mutations. In a large application, this file would be huge.
--   I used typescript for front and backend development and there are some areas where typing could be better and some areas where I would want to research more into. Example: DialogController component on the front-end, graphql-code-generator package, and codegen.yml has an any typing.
--   More validation in the forms. Dropdowns over textfields for make, model, year. Pulling this data from some source rather than be hardcoded.
+-   Typescript typings. Example: DialogController component on the front-end, graphql-code-generator package, and codegen.yml has an any typing.
+-   More validation in the forms.
+    -   Dropdowns over textfields for make, model, year.
+    -   Pulling this data from some source rather than be hardcoded.
 -   Image upload or pulling images of vechicles from another source.
 -   Fully implement JWT token authentication. Only half of the process as is.
 -   TDD approach. Some kind of testing cypress, jest, mocha, etc. Testing was completely omitted due to time, but certainly something I would want implement.
