@@ -101,6 +101,7 @@ const UpdateCarDialog: FC<UpdateCarDialogProps> = ({
                         label='VIN'
                         name='vin'
                         errors={errors}
+                        textFieldProps={{ defaultValue: vin }}
                     />
                     <ControlledCheckbox
                         name='isActive'

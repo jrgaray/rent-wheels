@@ -3,8 +3,6 @@
 ## Overview
 
 This is a CRUD web application for cars. Users can log into their accounts and manage their vehicles.
-![user_create_accounts](./img/user_create_accounts.gif)
-![update_delete](./img/update_delete.gif)
 
 Technologies of note used in this application are:
 
@@ -20,6 +18,9 @@ Technologies of note used in this application are:
 -   styled-components
 -   react-hook-form
 -   Docker
+
+    ![user_create_accounts](./img/user_create_accounts.gif)
+    ![update_delete](./img/update_delete.gif)
 
 ## Table of Contents
 
@@ -38,7 +39,6 @@ To run the application, ensure that the following application are installed on y
 
 -   [Docker](https://www.docker.com/get-started)
 -   [Docker Compose](https://docs.docker.com/compose/install/)
--   [yarn](https://classic.yarnpkg.com/en/docs/install/)
 -   [node](https://nodejs.org/en/download/)
 -   [git](https://git-scm.com/downloads)
 
@@ -47,10 +47,6 @@ To run the application, ensure that the following application are installed on y
 Once you have the prerequiste applications installed on your machine, clone this repository to your machine by using the following command:
 
 `git clone https://github.com/jrgaray/rent-wheels.git`
-
-After the repository is cloned to your machine, `cd` into the client directory and run:
-
-`yarn`
 
 Finally, run the last command to build the projects in their docker containers:
 
