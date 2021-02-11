@@ -43,7 +43,6 @@ The Car schema can be a simple JSON object and should include { id: string, make
 -   [Quickstart](#quickstart)
     -   [Prerequistes](#prerequisites)
     -   [Starting Local Environment](#starting-development-environment)
--   [Project Requirements](#project-requirements)
 -   [Development Process](#development-process)
 -   [Limitations and Considerations](#limitations-and-considerations)
 
