@@ -88,8 +88,16 @@ const UpdateCarDialog: FC<UpdateCarDialogProps> = ({
                         errors={errors}
                     />
                     <ControlledText
-                        textFieldProps={{ defaultValue: vin }}
-                        register={() => register({ required: true })}
+                        register={() =>
+                            register({
+                                required: true,
+                                validate: (value: string) => {
+                                    if (value.length !== 17) {
+                                        return 'VIN must be 17 characters'
+                                    }
+                                },
+                            })
+                        }
                         label='VIN'
                         name='vin'
                         errors={errors}

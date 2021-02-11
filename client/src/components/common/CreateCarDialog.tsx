@@ -71,13 +71,27 @@ const CreateCarDialog: FC = () => {
                     errors={errors}
                 />
                 <ControlledText
-                    register={() => register({ required: true })}
+                    register={() =>
+                        register({
+                            valueAsDate: true,
+                            required: true,
+                        })
+                    }
                     label='Year'
                     name='year'
                     errors={errors}
                 />
                 <ControlledText
-                    register={() => register({ required: true })}
+                    register={() =>
+                        register({
+                            required: true,
+                            validate: (value: string) => {
+                                if (value.length !== 17) {
+                                    return 'VIN must be 17 characters'
+                                }
+                            },
+                        })
+                    }
                     label='VIN'
                     name='vin'
                     errors={errors}

@@ -96,12 +96,12 @@ On Friday morning, I cleaned up the board a bit to organize my thoughts a bit mo
 
 To summarize what I came up with was:
 
--   Plan: I created a plan for the seven days that I had to develop the application.
--   Stretch Goals: Planned several stretch goals that I could try to reach for if time permitted.
--   Backend Schema: Came up with a basic schema for my queries, mutations, and database.
--   Technologies: Listed all the technologies I could possibily use.
--   Front-End Mock: Drew out a flow for what the front end might look like and thought about how users might interact with the application.
--   Unknowns/Questions: Listed out unknowns that I would need to research.
+-   **Plan:** I created a plan for the seven days that I had to develop the application.
+-   **Stretch Goals:** Planned several stretch goals that I could try to reach for if time permitted.
+-   **Backend Schema:** Came up with a basic schema for my queries, mutations, and database.
+-   **Technologies:** Listed all the technologies I could possibily use.
+-   **Front-End Mock:** Drew out a flow for what the front end might look like and thought about how users might interact with the application.
+-   **Unknowns/Questions:** Listed out unknowns that I would need to research.
 
 Beyond the requirements, what I completed was:
 
@@ -133,6 +133,7 @@ With the time constraint and the scope of the project, some things that could be
 -   Image upload or pulling images of vechicles from another source.
 -   Fully implement JWT token authentication. Only half of the process as is.
 -   TDD approach. Some kind of testing cypress, jest, mocha, etc. Testing was completely omitted due to time, but certainly something I would want implement.
+-   CI/CD Pipeline using gitlab, CircleCI, etc.
 -   Other functionality that I thought of to extend this project:
     -   Adding notifications for when another user rents your car.
     -   Real-time updates to the car list also displaying that information using GQL subscriptions and websockets.
