@@ -112,6 +112,7 @@ Beyond the requirements, what I completed was:
 -   Hot reload in docker environment.
 -   Half-way implementation of JWT authentication
 -   Store user information in context.
+-   Responsive.
 
 My thought was rather than implementing client-side functionality, first build a secure application and a "good" development environment.
 
@@ -137,3 +138,4 @@ With the time constraint and the scope of the project, some things that could be
     -   Real-time updates to the car list also displaying that information using GQL subscriptions and websockets.
     -   Ability to edit user account.
     -   Filtering cars to more easily find a specific car.
+    -   Better signaling when a user's car is active or inactive.
