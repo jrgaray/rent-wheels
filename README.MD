@@ -13,6 +13,7 @@ Technologies of note used in this application are:
 -   Apollo Client/Server
 -   Typescript
 -   Node.js
+-   Sequelize
 -   Postgres/ElephantSQL
 -   Material-UI
 -   styled-components
