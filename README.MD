@@ -3,6 +3,8 @@
 ## Overview
 
 This is a CRUD web application for cars. Users can log into their accounts and manage their vehicles.
+![user_create_accounts](./img/user_create_accounts.gif)
+![update_delete](./img/update_delete.gif)
 
 Technologies of note used in this application are:
 
@@ -100,6 +102,18 @@ To summarize what I came up with was:
 -   Listed all the technologies I could possibily use.
 -   Drew out a flow for what the front end might look like and thought about how users might interact with the application.
 -   Listed out unknowns that I would need to research.
+
+Beyond the requirements, what I completed was:
+
+-   Individual user accounts.
+-   Hashed passwords in the database
+-   Dockerized application.
+-   Locked down the front end with private routes.
+-   Hot reload in docker environment.
+-   Half-way implementation of JWT authentication
+-   Store user information in context.
+
+My thought was rather than implementing client-side functionality, first build a secure application and a "good" development environment.
 
 ## Limitations and Considerations
 
