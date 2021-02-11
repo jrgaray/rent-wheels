@@ -35,8 +35,8 @@ Create your own single page web application that allows users to perform queries
 
 The Car schema can be a simple JSON object and should include { id: string, make: string, model: string, year: string, VIN: string } at a minimum.
 
-    ![user_create_accounts](./img/user_create_accounts.gif)
-    ![update_delete](./img/update_delete.gif)
+![user_create_accounts](./img/user_create_accounts.gif)
+![update_delete](./img/update_delete.gif)
 
 ## Table of Contents
 
